@@ -7,8 +7,11 @@ export default function Footer() {
     <footer className="border-t border-gray-300 py-10">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          <div className="flex items-center gap-3">
+          <div>
             <img src={Logo} alt="Logo" className="h-12 object-contain" />
+            <p className="text-sm text-gray-600 mt-3">
+              Build better habits, one day at a time.
+            </p>
           </div>
 
           <div>
@@ -24,14 +27,12 @@ export default function Footer() {
             <h3 className="text-lg font-medium mb-2">Legal</h3>
             <ul className="text-sm space-y-1 text-gray-700">
               <li>
-                <a href="#" className="hover:underline">
+                <a className="hover:underline cursor-pointer">
                   Terms & Conditions
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:underline">
-                  Privacy Policy
-                </a>
+                <a className="hover:underline cursor-pointer">Privacy Policy</a>
               </li>
             </ul>
           </div>
@@ -39,13 +40,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-medium mb-2">Follow Us</h3>
             <div className="flex gap-4 text-gray-700  text-2xl">
-              <a href="#" className="hover:text-blue-600">
+              <a className="hover:text-green-500 cursor-pointer">
                 <FaFacebook />
               </a>
-              <a href="#" className="hover:text-blue-400  text-[28px]">
+              <a className="hover:text-green-500 cursor-pointer  text-[28px]">
                 <AiFillTwitterCircle />
               </a>
-              <a href="#" className="hover:text-blue-700">
+              <a className="hover:text-green-500 cursor-pointer">
                 <FaLinkedin />
               </a>
             </div>

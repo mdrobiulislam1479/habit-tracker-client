@@ -1,4 +1,6 @@
 import BannerSlider from "../Components/HomeComponents/BannerSlider";
+import HowItWorks from "../Components/HomeComponents/HowItWorks ";
+import JoinCommunity from "../Components/HomeComponents/JoinCommunity";
 import WhyBuildHabits from "../Components/HomeComponents/WhyBuildHabits";
 
 const Home = () => {
@@ -6,6 +8,8 @@ const Home = () => {
     <div>
       <BannerSlider />
       <WhyBuildHabits />
+      <HowItWorks />
+      <JoinCommunity />
     </div>
   );
 };

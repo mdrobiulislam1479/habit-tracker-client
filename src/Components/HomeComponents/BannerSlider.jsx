@@ -31,7 +31,7 @@ const BannerSlider = () => {
   ];
 
   return (
-    <div>
+    <div className="mt-16">
       <Swiper
         modules={[EffectFade, Pagination, Autoplay]}
         spaceBetween={30}
