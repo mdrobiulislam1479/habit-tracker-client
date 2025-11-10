@@ -14,6 +14,8 @@ export default function Header() {
     toast.success("Logout successful!");
   };
 
+  const handleNavClick = () => setMenuOpen(false);
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -123,40 +125,79 @@ export default function Header() {
 
       {menuOpen && (
         <nav className="md:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
-          <NavLink to="/" className="hover:text-green-500 transition-colors">
+          <NavLink
+            to="/"
+            className="hover:text-green-500 transition-colors"
+            onClick={handleNavClick}
+          >
             Home
           </NavLink>
           <NavLink
             to="/add-habit"
             className="hover:text-green-500 transition-colors"
+            onClick={handleNavClick}
           >
             Add Habit
           </NavLink>
           <NavLink
             to="/my-habits"
             className="hover:text-green-500 transition-colors"
+            onClick={handleNavClick}
           >
             My Habits
           </NavLink>
           <NavLink
             to="/browse-public-habits"
             className="hover:text-green-500 transition-colors"
+            onClick={handleNavClick}
           >
             Browse Public Habits
           </NavLink>
           <div className="mt-3 flex flex-col gap-2 border-t border-gray-200 pt-3">
-            <Link
-              to="/login"
-              className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-center"
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition text-center"
-            >
-              Signup
-            </Link>
+            {!user ? (
+              <>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-center"
+                  onClick={handleNavClick}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition text-center"
+                  onClick={handleNavClick}
+                >
+                  Signup
+                </Link>
+              </>
+            ) : (
+              <div className="flex justify-between items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      user.photoURL ||
+                      "https://img.icons8.com/glyph-neue/64/user-male-circle.png"
+                    }
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full border border-gray-300"
+                  />
+                  <div>
+                    <p className="text-sm font-medium">{user.displayName}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    handleNavClick();
+                  }}
+                  className="text-white bg-green-500 hover:bg-green-600 py-1 px-3 rounded-full"
+                >
+                  Log out
+                </button>
+              </div>
+            )}
           </div>
         </nav>
       )}
