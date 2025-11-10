@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { use, useRef, useState } from "react";
 import Logo from "../assets/logo.png";
+import { Link, NavLink } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, signOutUser } = use(AuthContext);
+  const dropdownRef = useRef(null);
+
+  const handleLogout = async () => {
+    await signOutUser();
+    toast.success("Logout successful!");
+  };
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 fixed w-full z-50">
@@ -12,39 +22,81 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex items-center gap-6 text-gray-700 font-medium">
-          <a href="/" className="hover:text-blue-600 transition-colors">
+          <NavLink to="/" className="hover:text-green-500 transition-colors">
             Home
-          </a>
-          <a
-            href="/add-habit"
-            className="hover:text-blue-600 transition-colors"
+          </NavLink>
+          <NavLink
+            to="/add-habit"
+            className="hover:text-green-500 transition-colors"
           >
             Add Habit
-          </a>
-          <a
-            href="/my-habits"
-            className="hover:text-blue-600 transition-colors"
+          </NavLink>
+          <NavLink
+            to="/my-habits"
+            className="hover:text-green-500 transition-colors"
           >
             My Habits
-          </a>
-          <a href="/browse" className="hover:text-blue-600 transition-colors">
+          </NavLink>
+          <NavLink
+            to="/browse-public-habits"
+            className="hover:text-green-500 transition-colors"
+          >
             Browse Public Habits
-          </a>
+          </NavLink>
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="/login"
-            className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
-          >
-            Login
-          </a>
-          <a
-            href="/signup"
-            className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition"
-          >
-            Signup
-          </a>
+        <div
+          className="hidden md:flex items-center gap-3 relative"
+          ref={dropdownRef}
+        >
+          {!user ? (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition"
+              >
+                Signup
+              </Link>
+            </>
+          ) : (
+            <>
+              <div className="dropdown">
+                <div tabIndex={0} role="button">
+                  <img
+                    src={
+                      user.photoURL ||
+                      "https://img.icons8.com/glyph-neue/64/user-male-circle.png"
+                    }
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+                  />
+                </div>
+                <ul
+                  tabIndex="-1"
+                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                >
+                  <div className="absolute right-0  w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-3 text-sm">
+                    <p className="font-medium text-gray-800">
+                      {user.displayName}
+                    </p>
+                    <p className="text-gray-500 text-xs mb-3">{user.email}</p>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-white bg-green-500 hover:bg-green-600 rounded-md"
+                    >
+                      Log out
+                    </button>
+                  </div>
+                </ul>
+              </div>
+            </>
+          )}
         </div>
 
         <button
@@ -70,35 +122,43 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
-          <a href="/" className="hover:text-blue-600">
+        <nav className="md:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
+          <NavLink to="/" className="hover:text-green-500 transition-colors">
             Home
-          </a>
-          <a href="/add-habit" className="hover:text-blue-600">
+          </NavLink>
+          <NavLink
+            to="/add-habit"
+            className="hover:text-green-500 transition-colors"
+          >
             Add Habit
-          </a>
-          <a href="/my-habits" className="hover:text-blue-600">
+          </NavLink>
+          <NavLink
+            to="/my-habits"
+            className="hover:text-green-500 transition-colors"
+          >
             My Habits
-          </a>
-          <a href="/browse" className="hover:text-blue-600">
+          </NavLink>
+          <NavLink
+            to="/browse-public-habits"
+            className="hover:text-green-500 transition-colors"
+          >
             Browse Public Habits
-          </a>
-
+          </NavLink>
           <div className="mt-3 flex flex-col gap-2 border-t border-gray-200 pt-3">
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-center"
             >
               Login
-            </a>
-            <a
-              href="/signup"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition text-center"
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition text-center"
             >
               Signup
-            </a>
+            </Link>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
