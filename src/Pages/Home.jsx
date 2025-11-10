@@ -6,6 +6,7 @@ import WhyBuildHabits from "../Components/HomeComponents/WhyBuildHabits";
 const Home = () => {
   return (
     <div>
+      <title>Habit Tracker | Home</title>
       <BannerSlider />
       <WhyBuildHabits />
       <HowItWorks />
