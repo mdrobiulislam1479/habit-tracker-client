@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);
@@ -58,6 +59,38 @@ export default function MyHabits() {
     }
   };
 
+  const handleDeleteHabit = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This habit will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(
+            `https://habit-tracker-sarver-1.vercel.app/habits/${id}`,
+            { method: "DELETE" }
+          );
+          const data = await res.json();
+
+          if (data.deletedCount > 0) {
+            setHabits(habits.filter((h) => h._id !== id));
+            Swal.fire("Deleted!", "Your habit has been removed.", "success");
+          } else {
+            Swal.fire("Error", "Failed to delete habit.", "error");
+          }
+        } catch (error) {
+          console.error("Delete error:", error);
+          Swal.fire("Error", "Something went wrong!", "error");
+        }
+      }
+    });
+  };
+
   return (
     <section className="py-22 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -106,7 +139,10 @@ export default function MyHabits() {
                           >
                             Update
                           </button>
-                          <button className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs sm:text-sm">
+                          <button
+                            onClick={() => handleDeleteHabit(habit._id)}
+                            className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs sm:text-sm"
+                          >
                             Delete
                           </button>
                           <button className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md text-xs sm:text-sm">
@@ -149,7 +185,10 @@ export default function MyHabits() {
                     >
                       Update
                     </button>
-                    <button className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
+                    <button
+                      onClick={() => handleDeleteHabit(habit._id)}
+                      className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
+                    >
                       Delete
                     </button>
                     <button className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm">
@@ -163,9 +202,9 @@ export default function MyHabits() {
         )}
         {selectedHabit && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative">
-              <h2 className="text-2xl font-bold mb-4 text-gray-800">
-                ✏️ Update Habit
+            <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative mx-3">
+              <h2 className="text-2xl font-bold mb-4 text-green-500 text-center">
+                Update Habit
               </h2>
 
               <form onSubmit={handleUpdateHabit} className="space-y-3">
