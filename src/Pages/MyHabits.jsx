@@ -8,7 +8,9 @@ export default function MyHabits() {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/my-habits?email=${user.email}`)
+      fetch(
+        `https://habit-tracker-sarver-1.vercel.app/my-habits?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => setHabits(data))
         .catch((err) => console.error("Error fetching habits:", err));

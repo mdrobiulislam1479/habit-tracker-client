@@ -55,11 +55,14 @@ export default function AddHabit() {
         createdAt: new Date(),
       };
 
-      const res = await fetch("http://localhost:5000/habits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newHabit),
-      });
+      const res = await fetch(
+        "https://habit-tracker-sarver-1.vercel.app/habits",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newHabit),
+        }
+      );
 
       if (res.ok) {
         toast.success("Habit added successfully!");

@@ -5,7 +5,7 @@ export default function FeaturedHabits() {
   const [habits, setHabits] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/habits/featured")
+    fetch("https://habit-tracker-sarver-1.vercel.app/habits/featured")
       .then((res) => res.json())
       .then((data) => setHabits(data))
       .catch((err) => console.error("Error fetching habits:", err));
