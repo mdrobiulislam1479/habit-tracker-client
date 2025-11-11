@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);
   const [habits, setHabits] = useState([]);
+  const [selectedHabit, setSelectedHabit] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
@@ -16,6 +18,45 @@ export default function MyHabits() {
         .catch((err) => console.error("Error fetching habits:", err));
     }
   }, [user]);
+
+  const handleUpdateHabit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = e.target;
+    const updatedHabit = {
+      title: form.title.value,
+      description: form.description.value,
+      category: form.category.value,
+      reminderTime: form.reminderTime.value,
+      image: form.image.value || selectedHabit.image,
+    };
+
+    const res = await fetch(
+      `https://habit-tracker-sarver-1.vercel.app/habits/${selectedHabit._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedHabit),
+      }
+    );
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (data.modifiedCount > 0) {
+      toast.success("Habit updated successfully!");
+      setSelectedHabit(null);
+
+      fetch(
+        `https://habit-tracker-sarver-1.vercel.app/my-habits?email=${user.email}`
+      )
+        .then((res) => res.json())
+        .then(setHabits);
+    } else {
+      toast.error("No changes made or update failed.");
+    }
+  };
 
   return (
     <section className="py-22 px-4 sm:px-6 lg:px-8">
@@ -59,12 +100,12 @@ export default function MyHabits() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex flex-wrap justify-center gap-2">
-                          <Link
-                            to={`/update-habit/${habit._id}`}
+                          <button
+                            onClick={() => setSelectedHabit(habit)}
                             className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-xs sm:text-sm"
                           >
                             Update
-                          </Link>
+                          </button>
                           <button className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs sm:text-sm">
                             Delete
                           </button>
@@ -102,12 +143,12 @@ export default function MyHabits() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 mt-4">
-                    <Link
-                      to={`/update-habit/${habit._id}`}
+                    <button
+                      onClick={() => setSelectedHabit(habit)}
                       className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-md text-sm"
                     >
                       Update
-                    </Link>
+                    </button>
                     <button className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
                       Delete
                     </button>
@@ -119,6 +160,92 @@ export default function MyHabits() {
               ))}
             </div>
           </>
+        )}
+        {selectedHabit && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">
+                ✏️ Update Habit
+              </h2>
+
+              <form onSubmit={handleUpdateHabit} className="space-y-3">
+                <input
+                  type="text"
+                  name="title"
+                  defaultValue={selectedHabit.title}
+                  placeholder="Habit Title"
+                  className="w-full border p-2 rounded-lg"
+                  required
+                />
+                <textarea
+                  name="description"
+                  defaultValue={selectedHabit.description}
+                  placeholder="Description"
+                  className="w-full border p-2 rounded-lg"
+                ></textarea>
+
+                <select
+                  name="category"
+                  defaultValue={selectedHabit.category}
+                  className="w-full border p-2 rounded-lg"
+                  required
+                >
+                  <option>Morning</option>
+                  <option>Work</option>
+                  <option>Fitness</option>
+                  <option>Evening</option>
+                  <option>Study</option>
+                </select>
+
+                <input
+                  type="time"
+                  name="reminderTime"
+                  defaultValue={selectedHabit.reminderTime}
+                  className="w-full border p-2 rounded-lg"
+                />
+
+                <input
+                  type="text"
+                  name="image"
+                  placeholder="ImgBB Image URL (optional)"
+                  defaultValue={selectedHabit.image}
+                  className="w-full border p-2 rounded-lg"
+                />
+
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    value={selectedHabit.userName}
+                    readOnly
+                    className="border p-2 rounded-lg bg-gray-100"
+                  />
+                  <input
+                    type="email"
+                    value={selectedHabit.userEmail}
+                    readOnly
+                    className="border p-2 rounded-lg bg-gray-100"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-3 mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedHabit(null)}
+                    className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+                  >
+                    {loading ? "Updating..." : "Update"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         )}
       </div>
     </section>

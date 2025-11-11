@@ -12,7 +12,7 @@ export default function BrowsePublicHabits() {
   }, []);
 
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12 ">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center my-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
