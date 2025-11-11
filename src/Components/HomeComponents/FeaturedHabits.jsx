@@ -57,16 +57,21 @@ export default function FeaturedHabits() {
                   {habit.description || "No description available."}
                 </p>
 
-                {habit.userName && (
-                  <p className="text-xs text-gray-500 mt-3">
-                    👤 <span className="font-medium">{habit.userName}</span>
-                  </p>
-                )}
+                <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
+                  {habit.userName && (
+                    <p>
+                      👤 <span className="font-medium">{habit.userName}</span>
+                    </p>
+                  )}
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                    {habit.category || "General"}
+                  </span>
+                </div>
 
                 <div className="mt-4">
                   <Link
                     to={`/habit/${habit._id}`}
-                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition"
+                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full text-center"
                   >
                     View Details
                   </Link>
