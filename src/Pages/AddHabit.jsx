@@ -86,6 +86,7 @@ export default function AddHabit() {
 
   return (
     <section className="max-w-3xl mx-3 md:mx-auto  mt-24 mb-5 p-6 bg-white shadow rounded-lg">
+      <title>Habit Tracker | Add Habit</title>
       <h2 className="text-2xl font-semibold mb-6 text-green-500 text-center">
         Add a New Habit
       </h2>

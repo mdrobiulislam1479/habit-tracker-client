@@ -1,15 +1,32 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import LoadingSpinner from "../LoadingSpinner";
+import { BeatLoader } from "react-spinners";
 
 export default function FeaturedHabits() {
   const [habits, setHabits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("https://habit-tracker-sarver-1.vercel.app/habits/featured")
       .then((res) => res.json())
-      .then((data) => setHabits(data))
-      .catch((err) => console.error("Error fetching habits:", err));
+      .then((data) => {
+        setHabits(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching habits:", err);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-32 bg-gray-50">
+        <BeatLoader color="green" />
+      </div>
+    );
+  }
 
   return (
     <section className="py-12 bg-gray-50">

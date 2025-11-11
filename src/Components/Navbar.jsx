@@ -3,10 +3,11 @@ import Logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { PuffLoader } from "react-spinners";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, signOutUser } = use(AuthContext);
+  const { user, signOutUser, loading } = use(AuthContext);
   const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
@@ -51,7 +52,9 @@ export default function Header() {
           className="hidden md:flex items-center gap-3 relative"
           ref={dropdownRef}
         >
-          {!user ? (
+          {loading ? (
+            <PuffLoader size={40} color="green" />
+          ) : !user ? (
             <>
               <Link
                 to="/login"

@@ -1,18 +1,35 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("https://habit-tracker-sarver-1.vercel.app/habits")
       .then((res) => res.json())
-      .then((data) => setHabits(data))
-      .catch((err) => console.error("Error fetching habits:", err));
+      .then((data) => {
+        setHabits(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching habits:", err);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen ">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <section className="py-12 ">
+      <title>Browse Public Habits</title>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center my-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">

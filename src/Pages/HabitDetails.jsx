@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 export default function HabitDetails() {
   const { id } = useParams();
@@ -61,8 +62,8 @@ export default function HabitDetails() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64 text-lg text-gray-500">
-        Loading habit details...
+      <div className="flex items-center justify-center min-h-screen ">
+        <LoadingSpinner />
       </div>
     );
   }
@@ -79,6 +80,7 @@ export default function HabitDetails() {
 
   return (
     <div className="max-w-7xl mx-5  xl:mx-auto p-6 mt-24  mb-10 rounded-2xl shadow-lg border border-green-500 ">
+      <title>{habit.title}</title>
       <div className="flex flex-col sm:flex-row gap-6">
         {habit.image && (
           <img

@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);
   const [habits, setHabits] = useState([]);
   const [selectedHabit, setSelectedHabit] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user?.email) {
@@ -15,14 +16,19 @@ export default function MyHabits() {
         `https://habit-tracker-sarver-1.vercel.app/my-habits?email=${user.email}`
       )
         .then((res) => res.json())
-        .then((data) => setHabits(data))
-        .catch((err) => console.error("Error fetching habits:", err));
+        .then((data) => {
+          setHabits(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Error fetching habits:", err);
+          setLoading(false);
+        });
     }
   }, [user]);
 
   const handleUpdateHabit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     const form = e.target;
     const updatedHabit = {
@@ -43,7 +49,6 @@ export default function MyHabits() {
     );
 
     const data = await res.json();
-    setLoading(false);
 
     if (data.modifiedCount > 0) {
       toast.success("Habit updated successfully!");
@@ -91,8 +96,55 @@ export default function MyHabits() {
     });
   };
 
+  const handleMarkComplete = async (habitId) => {
+    try {
+      const res = await fetch(
+        `https://habit-tracker-sarver-1.vercel.app/habits/complete/${habitId}`,
+        { method: "PATCH" }
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        Swal.fire("Completed!", "Habit marked complete for today!", "success");
+
+        setHabits((prev) =>
+          prev.map((h) =>
+            h._id === habitId
+              ? {
+                  ...h,
+                  currentStreak: data.currentStreak,
+                  completionHistory: data.completionHistory,
+                }
+              : h
+          )
+        );
+      } else {
+        Swal.fire(
+          "Already Done",
+          data.message || "You already completed this habit today.",
+          "info"
+        );
+      }
+    } catch (error) {
+      console.error("Error marking complete:", error);
+      Swal.fire(
+        "Error",
+        "Something went wrong while marking complete.",
+        "error"
+      );
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen ">
+        <LoadingSpinner />
+      </div>
+    );
+  }
   return (
     <section className="py-22 px-4 sm:px-6 lg:px-8">
+      <title>Habit Tracker | My Habits</title>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           My Habits
@@ -145,8 +197,11 @@ export default function MyHabits() {
                           >
                             Delete
                           </button>
-                          <button className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md text-xs sm:text-sm">
-                            Complete
+                          <button
+                            onClick={() => handleMarkComplete(habit._id)}
+                            className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md text-xs sm:text-sm"
+                          >
+                            Mark Complete
                           </button>
                         </div>
                       </td>
@@ -191,8 +246,11 @@ export default function MyHabits() {
                     >
                       Delete
                     </button>
-                    <button className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm">
-                      Complete
+                    <button
+                      onClick={() => handleMarkComplete(habit._id)}
+                      className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm"
+                    >
+                      Mark Complete
                     </button>
                   </div>
                 </div>
@@ -279,7 +337,7 @@ export default function MyHabits() {
                     disabled={loading}
                     className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
                   >
-                    {loading ? "Updating..." : "Update"}
+                    Update
                   </button>
                 </div>
               </form>
