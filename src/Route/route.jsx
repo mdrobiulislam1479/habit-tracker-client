@@ -8,11 +8,13 @@ import Signup from "../Pages/Signup";
 import BrowsePublicHabits from "../Pages/BrowsePublicHabits";
 import PrivateRoute from "./PrivateRoute";
 import HabitDetails from "../Pages/HabitDetails";
+import NotFound from "../Pages/NotFound";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <NotFound/>,
     children: [
       {
         path: "/",
