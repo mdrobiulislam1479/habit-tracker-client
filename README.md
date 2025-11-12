@@ -1,16 +1,29 @@
-# React + Vite
+# 🌱 Habit Tracker – Build Better Habits, Every Day
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site URL:** [https://habitwise.netlify.app](https://habitwise.netlify.app)
 
-Currently, two official plugins are available:
+HabitWise is a modern habit tracking web application that helps users build positive routines, stay consistent, and monitor their progress over time. Built with React, Firebase Authentication, and Tailwind CSS, it offers a clean interface with dark mode support and progress analytics.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ✅ **User Authentication** – Secure signup and login with Firebase (Email/Password, Google Sign-In).
+- 📊 **Progress Dashboard** – Visual analytics of habit streaks and weekly progress using charts.
+- 🧠 **Habit Management** – Add, edit, delete, and track daily habits with completion status.
+- 🌍 **Public Habit Library** – Browse and explore habits shared by other users for inspiration.
+- 🔔 **Toast Notifications** – Interactive success/error messages for smooth user experience.
+- 📱 **Responsive Design** – Fully optimized for mobile, tablet, and desktop devices.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **Frontend:** React, Tailwind CSS, Framer Motion
+- **Routing:** React Router
+- **Authentication:** Firebase Auth
+- **State Management:** React Context API
+- **Charts:** Recharts / Chart.js
+- **Notifications:** React Toastify
+
+---

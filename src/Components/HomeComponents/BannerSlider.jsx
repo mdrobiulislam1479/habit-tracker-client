@@ -10,21 +10,21 @@ const BannerSlider = () => {
   const slides = [
     {
       image:
-        "https://i.ibb.co.com/rKjhWYjD/marten-bjork-6d-W3xy-Qvc-YE-unsplash.jpg",
+        "https://i.ibb.co.com/mr1VqshY/Group-ouseburn-walk-4-aspect-ratio-16-9.png",
       title: "Build Better Habits Every Day",
       description:
         "Stay consistent and track your progress toward becoming your best self.",
     },
     {
       image:
-        "https://i.ibb.co.com/vCgQcX9r/tim-van-der-kuip-CPs2-X8-JYm-S8-unsplash.jpg",
+        "https://i.ibb.co.com/gZ9wNV8Y/The-Importance-of-Sustained-Growth.webp",
       title: "Visualize Your Growth",
       description:
         "See your streaks, milestones, and celebrate every achievement along the way.",
     },
     {
       image:
-        "https://i.ibb.co.com/PZN2R72c/marius-christensen-h-WZP-MRo-T6-I-unsplash.jpg",
+        "https://i.ibb.co.com/FbdDhwtS/Blog-Healthy-Community-feature-final-1.jpg",
       title: "Join a Community of Achievers",
       description:
         "Connect with others, share your journey, and stay inspired to keep going.",
