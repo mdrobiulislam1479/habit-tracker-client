@@ -46,18 +46,22 @@ export default function HabitDetails() {
   };
 
   const calculateProgress = () => {
-    if (!habit?.completionHistory) return 0;
+    if (!habit?.completionHistory || habit.completionHistory.length === 0)
+      return 0;
+
     const today = new Date();
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(today.getDate() - 30);
 
-    const count = habit.completionHistory.filter((date) => {
-      const [d, m, y] = date.split("-").map(Number);
+    const uniqueDates = [...new Set(habit.completionHistory)];
+
+    const count = uniqueDates.filter((dateStr) => {
+      const [d, m, y] = dateStr.split("-").map(Number);
       const dt = new Date(y, m - 1, d);
       return dt >= thirtyDaysAgo && dt <= today;
     }).length;
 
-    return Math.round((count / 30) * 100);
+    return Math.min(100, Math.round((count / 30) * 100));
   };
 
   if (loading) {
