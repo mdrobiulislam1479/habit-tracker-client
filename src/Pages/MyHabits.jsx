@@ -178,7 +178,7 @@ export default function MyHabits() {
                       </td>
                       <td className="py-3 px-4">{habit.category}</td>
                       <td className="py-3 px-4 text-center">
-                        {habit.streak || 0}
+                        {habit.currentStreak || 0}
                       </td>
                       <td className="py-3 px-4">
                         {new Date(habit.createdAt).toLocaleDateString()}

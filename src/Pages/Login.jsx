@@ -5,6 +5,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Context/AuthContext";
+import Lottie from "lottie-react";
+import Register from "../animations/register.json";
 
 const Login = () => {
   const { signInUser, signInWithGoogle, setLoading } = use(AuthContext);
@@ -76,12 +78,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen lg:px-10 flex items-center justify-center bg-gray-100">
       <title>Habit Tracker | Log In</title>
-      <div
-        className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8"
-        data-aos="zoom-in"
-      >
+      <div className="w-1/2 hidden lg:block">
+        <Lottie animationData={Register} loop={true} />
+      </div>
+      
+      <div className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
 
         <form className="space-y-4 " onSubmit={handleLogIn}>

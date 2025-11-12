@@ -1,13 +1,12 @@
 import { Link } from "react-router";
+import Lottie from "lottie-react";
+import Error404 from "../animations/Error 404.json";
 
 export default function NotFound() {
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-center px-4">
-      <h1 className="text-8xl font-extrabold text-green-500 mb-4">404</h1>
-      <h2 className="text-2xl font-semibold text-gray-700 mb-2">
-        Page Not Found
-      </h2>
-      <p className="text-gray-500 mb-6 max-w-md">
+    <section className="flex flex-col items-center justify-center min-h-screen bg-green-50 text-center px-4">
+      <Lottie animationData={Error404} loop={true} />
+      <p className="text-gray-500 mb-4 max-w-md">
         Sorry, the page you’re looking for doesn’t exist or has been moved.
       </p>
       <Link
