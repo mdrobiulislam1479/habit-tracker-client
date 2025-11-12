@@ -93,7 +93,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen lg:px-10 flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen lg:px-10 pt-16 flex items-center justify-center bg-gray-100">
       <title>Habit Tracker | Register</title>
       <div className="w-1/2 hidden lg:block">
         <Lottie animationData={Register} loop={true} />

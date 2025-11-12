@@ -56,7 +56,7 @@ const BannerSlider = () => {
                 <h2 className="text-2xl md:text-4xl font-bold mb-3">
                   {slide.title}
                 </h2>
-                <p className="text-sm md:text-lg max-w-2xl">
+                <p className="text-sm md:text-lg max-w-2xl text-white/60">
                   {slide.description}
                 </p>
                 <button className="mt-6 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-5 rounded-lg transition">
