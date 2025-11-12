@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 export default function AddHabit() {
   const { user } = use(AuthContext);
@@ -84,15 +85,44 @@ export default function AddHabit() {
     }
   };
 
-  return (
-    <section className="max-w-3xl mx-3 md:mx-auto  mt-24 mb-5 p-6 bg-white shadow rounded-lg">
-      <title>Habit Tracker | Add Habit</title>
-      <h2 className="text-2xl font-semibold mb-6 text-green-500 text-center">
-        Add a New Habit
-      </h2>
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  return (
+    <motion.section
+      className="max-w-3xl mx-3 md:mx-auto mt-24 mb-5 p-6 bg-white shadow rounded-lg"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <title>Habit Tracker | Add Habit</title>
+      <motion.h2
+        className="text-2xl font-semibold mb-6 text-green-500 text-center"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        Add a New Habit
+      </motion.h2>
+
+      <motion.form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={item}>
           <label className="block mb-1 font-medium">Habit Title</label>
           <input
             type="text"
@@ -103,9 +133,9 @@ export default function AddHabit() {
             placeholder="Enter habit title"
             required
           />
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={item}>
           <label className="block mb-1 font-medium">Description</label>
           <textarea
             name="description"
@@ -115,9 +145,9 @@ export default function AddHabit() {
             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Enter habit description"
           />
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={item}>
           <label className="block mb-1 font-medium">Category</label>
           <select
             name="category"
@@ -133,9 +163,9 @@ export default function AddHabit() {
             <option value="Evening">Evening</option>
             <option value="Study">Study</option>
           </select>
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={item}>
           <label className="block mb-1 font-medium">Reminder Time</label>
           <input
             type="time"
@@ -145,9 +175,9 @@ export default function AddHabit() {
             required
             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={item}>
           <label className="block mb-1 font-medium">
             Upload Image (optional)
           </label>
@@ -159,9 +189,12 @@ export default function AddHabit() {
             }
             className="file-input file-input-bordered w-full"
           />
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          variants={item}
+        >
           <div>
             <label className="block mb-1 font-medium">User Name</label>
             <input
@@ -180,16 +213,19 @@ export default function AddHabit() {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <button
+        <motion.button
           type="submit"
           disabled={loading}
+          variants={item}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition disabled:opacity-50"
         >
           {loading ? "Adding Habit..." : "Add Habit"}
-        </button>
-      </form>
-    </section>
+        </motion.button>
+      </motion.form>
+    </motion.section>
   );
 }

@@ -84,9 +84,9 @@ export default function Header() {
                 </div>
                 <ul
                   tabIndex="-1"
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  className="dropdown-content menu  rounded-box z-1 w-52 p-2 shadow-sm"
                 >
-                  <div className="absolute right-0  w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-3 text-sm">
+                  <div className="absolute right-40  w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-3 text-sm">
                     <p className="font-medium text-gray-800">
                       {user.displayName}
                     </p>

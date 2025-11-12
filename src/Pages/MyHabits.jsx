@@ -3,6 +3,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);
@@ -29,7 +30,6 @@ export default function MyHabits() {
 
   const handleUpdateHabit = async (e) => {
     e.preventDefault();
-
     const form = e.target;
     const updatedHabit = {
       title: form.title.value,
@@ -54,11 +54,10 @@ export default function MyHabits() {
       toast.success("Habit updated successfully!");
       setSelectedHabit(null);
 
-      fetch(
+      const updatedHabits = await fetch(
         `https://habit-tracker-sarver-1.vercel.app/my-habits?email=${user.email}`
-      )
-        .then((res) => res.json())
-        .then(setHabits);
+      ).then((res) => res.json());
+      setHabits(updatedHabits);
     } else {
       toast.error("No changes made or update failed.");
     }
@@ -106,7 +105,6 @@ export default function MyHabits() {
 
       if (res.ok) {
         Swal.fire("Completed!", "Habit marked complete for today!", "success");
-
         setHabits((prev) =>
           prev.map((h) =>
             h._id === habitId
@@ -142,6 +140,7 @@ export default function MyHabits() {
       </div>
     );
   }
+
   return (
     <section className="py-22 px-4 sm:px-6 lg:px-8">
       <title>Habit Tracker | My Habits</title>
@@ -168,182 +167,223 @@ export default function MyHabits() {
                   </tr>
                 </thead>
                 <tbody>
-                  {habits.map((habit) => (
-                    <tr
-                      key={habit._id}
-                      className="border-t border-green-500 hover:bg-gray-50 transition"
-                    >
-                      <td className="py-3 px-4 font-medium text-gray-900">
-                        {habit.title}
-                      </td>
-                      <td className="py-3 px-4">{habit.category}</td>
-                      <td className="py-3 px-4 text-center">
-                        {habit.currentStreak || 0}
-                      </td>
-                      <td className="py-3 px-4">
-                        {new Date(habit.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex flex-wrap justify-center gap-2">
-                          <button
-                            onClick={() => setSelectedHabit(habit)}
-                            className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-xs sm:text-sm"
-                          >
-                            Update
-                          </button>
-                          <button
-                            onClick={() => handleDeleteHabit(habit._id)}
-                            className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs sm:text-sm"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => handleMarkComplete(habit._id)}
-                            className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md text-xs sm:text-sm"
-                          >
-                            Mark Complete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  <AnimatePresence>
+                    {habits.map((habit) => (
+                      <motion.tr
+                        key={habit._id}
+                        className="border-t border-green-500 hover:bg-gray-50 transition"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <td className="py-3 px-4 font-medium text-gray-900">
+                          {habit.title}
+                        </td>
+                        <td className="py-3 px-4">{habit.category}</td>
+                        <td className="py-3 px-4 text-center">
+                          {habit.currentStreak || 0}
+                        </td>
+                        <td className="py-3 px-4">
+                          {new Date(habit.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex flex-wrap justify-center gap-2">
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setSelectedHabit(habit)}
+                              className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-xs sm:text-sm"
+                            >
+                              Update
+                            </motion.button>
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => handleDeleteHabit(habit._id)}
+                              className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs sm:text-sm"
+                            >
+                              Delete
+                            </motion.button>
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => handleMarkComplete(habit._id)}
+                              className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md text-xs sm:text-sm"
+                            >
+                              Mark Complete
+                            </motion.button>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
                 </tbody>
               </table>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-              {habits.map((habit) => (
-                <div
-                  key={habit._id}
-                  className="bg-white rounded-lg shadow border border-green-500 p-4 flex flex-col justify-between"
-                >
-                  <div className="border-b border-green-500 pb-3">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {habit.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      Category: {habit.category}
-                    </p>
-                    <p className="text-gray-600 text-sm">
-                      Streak:{" "}
-                      <span className="font-semibold">{habit.streak || 0}</span>
-                    </p>
-                    <p className="text-gray-500 text-xs mt-1">
-                      Created: {new Date(habit.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
+              <AnimatePresence>
+                {habits.map((habit) => (
+                  <motion.div
+                    key={habit._id}
+                    className="bg-white rounded-lg shadow border border-green-500 p-4 flex flex-col justify-between"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="border-b border-green-500 pb-3">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {habit.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm">
+                        Category: {habit.category}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        Streak:{" "}
+                        <span className="font-semibold">
+                          {habit.currentStreak || 0}
+                        </span>
+                      </p>
+                      <p className="text-gray-500 text-xs mt-1">
+                        Created:{" "}
+                        {new Date(habit.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
 
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <button
-                      onClick={() => setSelectedHabit(habit)}
-                      className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-md text-sm"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDeleteHabit(habit._id)}
-                      className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() => handleMarkComplete(habit._id)}
-                      className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm"
-                    >
-                      Mark Complete
-                    </button>
-                  </div>
-                </div>
-              ))}
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setSelectedHabit(habit)}
+                        className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-md text-sm"
+                      >
+                        Update
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleDeleteHabit(habit._id)}
+                        className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
+                      >
+                        Delete
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleMarkComplete(habit._id)}
+                        className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm"
+                      >
+                        Mark Complete
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </>
         )}
-        {selectedHabit && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative mx-3">
-              <h2 className="text-2xl font-bold mb-4 text-green-500 text-center">
-                Update Habit
-              </h2>
 
-              <form onSubmit={handleUpdateHabit} className="space-y-3">
-                <input
-                  type="text"
-                  name="title"
-                  defaultValue={selectedHabit.title}
-                  placeholder="Habit Title"
-                  className="w-full border p-2 rounded-lg"
-                  required
-                />
-                <textarea
-                  name="description"
-                  defaultValue={selectedHabit.description}
-                  placeholder="Description"
-                  className="w-full border p-2 rounded-lg"
-                ></textarea>
+        <AnimatePresence>
+          {selectedHabit && (
+            <motion.div
+              className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative mx-3"
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 50, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h2 className="text-2xl font-bold mb-4 text-green-500 text-center">
+                  Update Habit
+                </h2>
 
-                <select
-                  name="category"
-                  defaultValue={selectedHabit.category}
-                  className="w-full border p-2 rounded-lg"
-                  required
-                >
-                  <option>Morning</option>
-                  <option>Work</option>
-                  <option>Fitness</option>
-                  <option>Evening</option>
-                  <option>Study</option>
-                </select>
-
-                <input
-                  type="time"
-                  name="reminderTime"
-                  defaultValue={selectedHabit.reminderTime}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-                <input
-                  type="text"
-                  name="image"
-                  placeholder="ImgBB Image URL (optional)"
-                  defaultValue={selectedHabit.image}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-                <div className="grid grid-cols-2 gap-3">
+                <form onSubmit={handleUpdateHabit} className="space-y-3">
                   <input
                     type="text"
-                    value={selectedHabit.userName}
-                    readOnly
-                    className="border p-2 rounded-lg bg-gray-100"
+                    name="title"
+                    defaultValue={selectedHabit.title}
+                    placeholder="Habit Title"
+                    className="w-full border p-2 rounded-lg"
+                    required
                   />
-                  <input
-                    type="email"
-                    value={selectedHabit.userEmail}
-                    readOnly
-                    className="border p-2 rounded-lg bg-gray-100"
-                  />
-                </div>
+                  <textarea
+                    name="description"
+                    defaultValue={selectedHabit.description}
+                    placeholder="Description"
+                    className="w-full border p-2 rounded-lg"
+                  ></textarea>
 
-                <div className="flex justify-end gap-3 mt-4">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedHabit(null)}
-                    className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                  <select
+                    name="category"
+                    defaultValue={selectedHabit.category}
+                    className="w-full border p-2 rounded-lg"
+                    required
                   >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
-                  >
-                    Update
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+                    <option>Morning</option>
+                    <option>Work</option>
+                    <option>Fitness</option>
+                    <option>Evening</option>
+                    <option>Study</option>
+                  </select>
+
+                  <input
+                    type="time"
+                    name="reminderTime"
+                    defaultValue={selectedHabit.reminderTime}
+                    className="w-full border p-2 rounded-lg"
+                  />
+
+                  <input
+                    type="text"
+                    name="image"
+                    placeholder="ImgBB Image URL (optional)"
+                    defaultValue={selectedHabit.image}
+                    className="w-full border p-2 rounded-lg"
+                  />
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      value={selectedHabit.userName}
+                      readOnly
+                      className="border p-2 rounded-lg bg-gray-100"
+                    />
+                    <input
+                      type="email"
+                      value={selectedHabit.userEmail}
+                      readOnly
+                      className="border p-2 rounded-lg bg-gray-100"
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-3 mt-4">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedHabit(null)}
+                      className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

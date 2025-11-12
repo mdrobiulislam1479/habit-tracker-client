@@ -1,4 +1,5 @@
 import { FaUsers, FaComments, FaHeart } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const JoinCommunity = () => {
   const features = [
@@ -22,6 +23,23 @@ const JoinCommunity = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+    hover: { scale: 1.05, transition: { duration: 0.3 } },
+  };
+
   return (
     <section className="py-16 bg-gray-50" id="community">
       <div className="max-w-7xl mx-auto px-6 text-center">
@@ -33,11 +51,19 @@ const JoinCommunity = () => {
           self-improvement.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div
+          className="grid md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform"
+              className="bg-white p-8 rounded-2xl shadow-md cursor-pointer"
+              variants={cardVariants}
+              whileHover="hover"
             >
               <div className="flex flex-col items-center">
                 {feature.icon}
@@ -46,13 +72,17 @@ const JoinCommunity = () => {
                 </h3>
                 <p className="text-gray-600 text-sm">{feature.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <button className="mt-10 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition">
+        <motion.button
+          className="mt-10 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           Join Now
-        </button>
+        </motion.button>
       </div>
     </section>
   );

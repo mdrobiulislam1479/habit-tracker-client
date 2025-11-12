@@ -1,4 +1,5 @@
 import { FaClipboardList, FaCheckCircle, FaChartBar } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const HowItWorks = () => {
   const steps = [
@@ -22,6 +23,24 @@ const HowItWorks = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <section className="py-16 bg-white" id="how-it-works">
       <div className="max-w-7xl mx-auto px-6 text-center">
@@ -32,11 +51,18 @@ const HowItWorks = () => {
           Build better habits in just three easy steps.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div
+          className="grid md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {steps.map((step, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-gray-50 p-8 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform"
+              variants={cardVariants}
             >
               <div className="flex flex-col items-center">
                 {step.icon}
@@ -45,9 +71,9 @@ const HowItWorks = () => {
                 </h3>
                 <p className="text-gray-600 text-sm">{step.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

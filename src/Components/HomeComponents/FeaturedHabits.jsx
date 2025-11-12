@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import LoadingSpinner from "../LoadingSpinner";
 import { BeatLoader } from "react-spinners";
+import { CgProfile } from "react-icons/cg";
+import { IoMdPricetags } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export default function FeaturedHabits() {
   const [habits, setHabits] = useState([]);
@@ -28,6 +30,24 @@ export default function FeaturedHabits() {
     );
   }
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -44,11 +64,17 @@ export default function FeaturedHabits() {
         {habits.length === 0 ? (
           <p className="text-gray-500 text-center">No habits found.</p>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {habits.map((habit) => (
-              <div
+              <motion.div
                 key={habit._id}
                 className="bg-white shadow-md rounded-xl p-5 border border-gray-100 hover:shadow-lg transition"
+                variants={cardVariants}
               >
                 <h3 className="text-lg font-semibold text-gray-800">
                   {habit.title}
@@ -59,11 +85,13 @@ export default function FeaturedHabits() {
 
                 <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
                   {habit.userName && (
-                    <p>
-                      👤 <span className="font-medium">{habit.userName}</span>
+                    <p className="flex items-center gap-1">
+                      <CgProfile />{" "}
+                      <span className="font-medium">{habit.userName}</span>
                     </p>
                   )}
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                    <IoMdPricetags />
                     {habit.category || "General"}
                   </span>
                 </div>
@@ -76,9 +104,9 @@ export default function FeaturedHabits() {
                     View Details
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState, useContext } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
@@ -9,10 +9,11 @@ import { AuthContext } from "../Context/AuthContext";
 import { updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
 import Lottie from "lottie-react";
+import { motion } from "framer-motion";
 import Register from "../animations/register.json";
 
 export default function Signup() {
-  const { createUser, signInWithGoogle, setLoading } = use(AuthContext);
+  const { createUser, signInWithGoogle, setLoading } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export default function Signup() {
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasMinLength = password.length >= 6;
-
   const allValid = hasUppercase && hasLowercase && hasMinLength;
 
   const handleRegister = (e) => {
@@ -44,26 +44,18 @@ export default function Signup() {
       })
       .catch((error) => {
         setLoading(false);
-        if (!error?.code) {
-          toast.error("An unknown error occurred.");
-          return;
-        }
-
-        if (error.code === "auth/email-already-in-use") {
-          toast.error("Email is already in use. Try logging in instead.");
-        } else if (error.code === "auth/invalid-email") {
-          toast.error("Invalid email address.");
-        } else if (error.code === "auth/operation-not-allowed") {
-          toast.error("Email/password accounts are not enabled.");
-        } else if (error.code === "auth/weak-password") {
-          toast.error(
-            "Password is too weak. Please use at least 6 characters."
-          );
-        } else if (error.code === "auth/network-request-failed") {
-          toast.error("Network error. Check your internet connection.");
-        } else {
-          toast.error(`${error.message}`);
-        }
+        const messages = {
+          "auth/email-already-in-use":
+            "Email is already in use. Try logging in instead.",
+          "auth/invalid-email": "Invalid email address.",
+          "auth/operation-not-allowed":
+            "Email/password accounts are not enabled.",
+          "auth/weak-password":
+            "Password is too weak. Please use at least 6 characters.",
+          "auth/network-request-failed":
+            "Network error. Check your internet connection.",
+        };
+        toast.error(messages[error.code] || error.message);
       });
   };
 
@@ -71,34 +63,42 @@ export default function Signup() {
     signInWithGoogle()
       .then(() => {
         toast.success("Google sign in successful!");
-        navigate(location?.state || "/");
+        navigate("/");
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-        if (error.code === "auth/popup-closed-by-user") {
-          toast.error("Sign-in popup was closed before completing.");
-        } else if (error.code === "auth/cancelled-popup-request") {
-          toast.error("Cancelled previous popup request. Try again.");
-        } else if (
-          error.code === "auth/account-exists-with-different-credential"
-        ) {
-          toast.error(
-            "An account already exists with the same email but different sign-in method."
-          );
-        } else {
-          toast.error(`${error.message}`);
-        }
+        const messages = {
+          "auth/popup-closed-by-user":
+            "Sign-in popup was closed before completing.",
+          "auth/cancelled-popup-request":
+            "Cancelled previous popup request. Try again.",
+          "auth/account-exists-with-different-credential":
+            "An account already exists with the same email but different sign-in method.",
+        };
+        toast.error(messages[error.code] || error.message);
       });
   };
 
   return (
     <div className="min-h-screen lg:px-10 pt-16 flex items-center justify-center bg-gray-100">
       <title>Habit Tracker | Register</title>
-      <div className="w-1/2 hidden lg:block">
+
+      <motion.div
+        className="w-1/2 hidden lg:block"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2, type: "spring", bounce: 0.5 }}
+      >
         <Lottie animationData={Register} loop={true} />
-      </div>
-      <div className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8">
+      </motion.div>
+
+      <motion.div
+        className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
 
         <form className="space-y-4" onSubmit={handleRegister}>
@@ -190,7 +190,9 @@ export default function Signup() {
             </div>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             type="submit"
             className={`w-full py-2 rounded-md font-semibold text-white transition ${
               allValid
@@ -200,11 +202,16 @@ export default function Signup() {
             disabled={!allValid}
           >
             Register
-          </button>
+          </motion.button>
         </form>
+
         <div className="divider">or</div>
 
-        <div className="mt-4">
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="mt-4"
+        >
           <button
             type="button"
             onClick={handleGoogleSignIn}
@@ -213,7 +220,7 @@ export default function Signup() {
             <FcGoogle size={24} />
             <span>Continue with Google</span>
           </button>
-        </div>
+        </motion.div>
 
         <p className="text-sm text-center text-gray-600 mt-4">
           Already have an account?{" "}
@@ -221,7 +228,7 @@ export default function Signup() {
             Login
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }

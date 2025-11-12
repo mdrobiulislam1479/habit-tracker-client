@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import { CgProfile } from "react-icons/cg";
+import { IoMdPricetags } from "react-icons/io";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
@@ -25,7 +28,7 @@ export default function BrowsePublicHabits() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <LoadingSpinner />
       </div>
     );
@@ -41,19 +44,36 @@ export default function BrowsePublicHabits() {
   });
 
   return (
-    <section className="py-12 bg-gray-50 min-h-screen">
+    <motion.section
+      className="py-12 bg-gray-50 min-h-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
       <title>Browse Public Habits</title>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center my-12">
+        <motion.div
+          className="text-center my-12"
+          initial={{ y: -20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Browse Public Habits
           </h2>
           <p className="text-gray-600">
             Explore and discover new habits to add to your routine.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+        <motion.div
+          className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.2 }}
+        >
           <input
             type="text"
             placeholder="Search habits..."
@@ -73,50 +93,81 @@ export default function BrowsePublicHabits() {
               </option>
             ))}
           </select>
-        </div>
+        </motion.div>
 
-        {filteredHabits.length === 0 ? (
-          <p className="text-gray-500 text-center mt-10">
-            No habits found for your search/filter.
-          </p>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredHabits.map((habit) => (
-              <div
-                key={habit._id}
-                className="bg-white shadow-md rounded-xl p-5 border border-gray-100 hover:shadow-lg transition"
-              >
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {habit.title}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2 line-clamp-3">
-                  {habit.description || "No description available."}
-                </p>
+        <AnimatePresence>
+          {filteredHabits.length === 0 ? (
+            <motion.p
+              key="no-habits"
+              className="text-gray-500 text-center mt-10"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              No habits found for your search/filter.
+            </motion.p>
+          ) : (
+            <motion.div
+              key="habits-grid"
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+            >
+              {filteredHabits.map((habit) => (
+                <motion.div
+                  key={habit._id}
+                  className="bg-white shadow-md rounded-xl p-5 border border-gray-100 hover:shadow-lg transition"
+                  variants={{
+                    hidden: { opacity: 0, y: 40 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 80, damping: 12 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                >
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {habit.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                    {habit.description || "No description available."}
+                  </p>
 
-                <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
-                  {habit.userName && (
-                    <p>
-                      👤 <span className="font-medium">{habit.userName}</span>
-                    </p>
-                  )}
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
-                    {habit.category || "General"}
-                  </span>
-                </div>
+                  <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
+                    {habit.userName && (
+                      <p className="flex items-center gap-1">
+                        <CgProfile />{" "}
+                        <span className="font-medium">{habit.userName}</span>
+                      </p>
+                    )}
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                      <IoMdPricetags />
+                      {habit.category || "General"}
+                    </span>
+                  </div>
 
-                <div className="mt-4">
-                  <Link
-                    to={`/habit/${habit._id}`}
-                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full text-center"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                  <div className="mt-4">
+                    <Link
+                      to={`/habit/${habit._id}`}
+                      className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full text-center"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </section>
+    </motion.section>
   );
 }
