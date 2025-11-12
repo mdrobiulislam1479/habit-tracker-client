@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import { motion, AnimatePresence } from "framer-motion";
+import ProgressDashboard from "../Components/ProgressDashboard";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);

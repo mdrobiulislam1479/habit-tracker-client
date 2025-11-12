@@ -17,6 +17,42 @@ export default function Header() {
 
   const handleNavClick = () => setMenuOpen(false);
 
+  const list = (
+    <>
+      <NavLink to="/" className="hover:text-green-500 transition-colors">
+        Home
+      </NavLink>
+      <NavLink
+        to="/add-habit"
+        className="hover:text-green-500 transition-colors"
+      >
+        Add Habit
+      </NavLink>
+      <NavLink
+        to="/my-habits"
+        className="hover:text-green-500 transition-colors"
+      >
+        My Habits
+      </NavLink>
+      {user ? (
+        <NavLink
+          to="/dashboard"
+          className="hover:text-green-500 transition-colors"
+        >
+          Dashboard
+        </NavLink>
+      ) : (
+        ""
+      )}
+      <NavLink
+        to="/browse-public-habits"
+        className="hover:text-green-500 transition-colors"
+      >
+        Browse Public Habits
+      </NavLink>
+    </>
+  );
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -24,32 +60,12 @@ export default function Header() {
           <img src={Logo} alt="Logo" className="h-10 object-contain" />
         </div>
 
-        <nav className="hidden md:flex items-center gap-6 text-gray-700 font-medium">
-          <NavLink to="/" className="hover:text-green-500 transition-colors">
-            Home
-          </NavLink>
-          <NavLink
-            to="/add-habit"
-            className="hover:text-green-500 transition-colors"
-          >
-            Add Habit
-          </NavLink>
-          <NavLink
-            to="/my-habits"
-            className="hover:text-green-500 transition-colors"
-          >
-            My Habits
-          </NavLink>
-          <NavLink
-            to="/browse-public-habits"
-            className="hover:text-green-500 transition-colors"
-          >
-            Browse Public Habits
-          </NavLink>
+        <nav className="hidden lg:flex items-center gap-6 text-gray-700 font-medium">
+          {list}
         </nav>
 
         <div
-          className="hidden md:flex items-center gap-3 relative"
+          className="hidden lg:flex items-center gap-3 relative"
           ref={dropdownRef}
         >
           {loading ? (
@@ -105,7 +121,7 @@ export default function Header() {
         </div>
 
         <button
-          className="md:hidden flex flex-col justify-center items-center w-8 h-8 border border-gray-300 rounded-md"
+          className="lg:hidden flex flex-col justify-center items-center w-8 h-8 border border-gray-300 rounded-md"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span
@@ -127,35 +143,8 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="md:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
-          <NavLink
-            to="/"
-            className="hover:text-green-500 transition-colors"
-            onClick={handleNavClick}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/add-habit"
-            className="hover:text-green-500 transition-colors"
-            onClick={handleNavClick}
-          >
-            Add Habit
-          </NavLink>
-          <NavLink
-            to="/my-habits"
-            className="hover:text-green-500 transition-colors"
-            onClick={handleNavClick}
-          >
-            My Habits
-          </NavLink>
-          <NavLink
-            to="/browse-public-habits"
-            className="hover:text-green-500 transition-colors"
-            onClick={handleNavClick}
-          >
-            Browse Public Habits
-          </NavLink>
+        <nav className="lg:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
+          {list}
           <div className="mt-3 flex flex-col gap-2 border-t border-gray-200 pt-3">
             {!user ? (
               <>

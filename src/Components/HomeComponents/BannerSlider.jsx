@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const BannerSlider = () => {
   const slides = [
@@ -36,15 +37,6 @@ const BannerSlider = () => {
       opacity: 1,
       y: 0,
       transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, delay: 0.5, ease: "easeOut" },
     },
   };
 
@@ -90,15 +82,12 @@ const BannerSlider = () => {
                 >
                   {slide.description}
                 </motion.p>
-                <motion.button
+                <Link
                   className="mt-6 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-5 rounded-lg transition"
-                  variants={buttonVariants}
-                  initial="hidden"
-                  animate="visible"
-                  key={slide.title + "btn"}
+                  to="/add-habit"
                 >
                   Get Started
-                </motion.button>
+                </Link>
               </div>
             </div>
           </SwiperSlide>

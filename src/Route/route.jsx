@@ -9,6 +9,7 @@ import BrowsePublicHabits from "../Pages/BrowsePublicHabits";
 import PrivateRoute from "./PrivateRoute";
 import HabitDetails from "../Pages/HabitDetails";
 import NotFound from "../Pages/NotFound";
+import ProgressDashboard from "../Components/ProgressDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HabitDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <ProgressDashboard />
           </PrivateRoute>
         ),
       },

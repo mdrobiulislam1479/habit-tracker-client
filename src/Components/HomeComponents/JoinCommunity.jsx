@@ -1,7 +1,11 @@
 import { FaUsers, FaComments, FaHeart } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { use } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { Link } from "react-router";
 
 const JoinCommunity = () => {
+  const { user } = use(AuthContext);
   const features = [
     {
       icon: <FaUsers className="text-green-500 text-5xl mb-4" />,
@@ -75,14 +79,18 @@ const JoinCommunity = () => {
             </motion.div>
           ))}
         </motion.div>
-
-        <motion.button
-          className="mt-10 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Join Now
-        </motion.button>
+        {user ? (
+          ""
+        ) : (
+          <div className="mt-10">
+            <Link
+              to="/login"
+              className=" bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition"
+            >
+              Join Now
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
