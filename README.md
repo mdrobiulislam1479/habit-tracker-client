@@ -1,8 +1,8 @@
 # 🌱 Habit Tracker – Build Better Habits, Every Day
 
-**Live Site URL:** [https://habitwise.netlify.app](https://habitwise.netlify.app)
+**Live Site URL:** [https://habit-tracker-zone.netlify.app](https://habit-tracker-zone.netlify.app)
 
-HabitWise is a modern habit tracking web application that helps users build positive routines, stay consistent, and monitor their progress over time. Built with React, Firebase Authentication, and Tailwind CSS, it offers a clean interface with dark mode support and progress analytics.
+Habit Tracker is a modern habit tracking web application that helps users build positive routines, stay consistent, and monitor their progress over time. Built with React, Firebase Authentication, and Tailwind CSS, it offers a clean interface and progress analytics.
 
 ---
 

@@ -6,6 +6,7 @@ import Error404 from "../animations/Error 404.json";
 export default function NotFound() {
   return (
     <section className="flex flex-col items-center justify-center min-h-screen bg-green-50 text-center px-4">
+      <title>Error 404</title>
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}

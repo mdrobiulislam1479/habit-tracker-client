@@ -89,6 +89,7 @@ export default function ProgressDashboard() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 pt-22 pb-10">
+      <title>Progress Dashboard</title>
       <h2 className="text-3xl font-bold text-gray-800 mb-2 text-center">
         Progress Analytics Dashboard
       </h2>

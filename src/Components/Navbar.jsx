@@ -19,16 +19,22 @@ export default function Header() {
 
   const list = (
     <>
-      <NavLink to="/" className="hover:text-green-500 transition-colors">
+      <NavLink
+        onClick={handleNavClick}
+        to="/"
+        className="hover:text-green-500 transition-colors"
+      >
         Home
       </NavLink>
       <NavLink
+        onClick={handleNavClick}
         to="/add-habit"
         className="hover:text-green-500 transition-colors"
       >
         Add Habit
       </NavLink>
       <NavLink
+        onClick={handleNavClick}
         to="/my-habits"
         className="hover:text-green-500 transition-colors"
       >
@@ -36,6 +42,7 @@ export default function Header() {
       </NavLink>
       {user ? (
         <NavLink
+          onClick={handleNavClick}
           to="/dashboard"
           className="hover:text-green-500 transition-colors"
         >
@@ -45,6 +52,7 @@ export default function Header() {
         ""
       )}
       <NavLink
+        onClick={handleNavClick}
         to="/browse-public-habits"
         className="hover:text-green-500 transition-colors"
       >

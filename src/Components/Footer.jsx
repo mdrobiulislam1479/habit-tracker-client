@@ -1,7 +1,7 @@
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import Logo from "../assets/logo.png";
-import { AiFillTwitterCircle } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   const sectionVariants = {
@@ -76,11 +76,8 @@ export default function Footer() {
               <motion.a whileHover={iconHover} className="cursor-pointer">
                 <FaFacebook />
               </motion.a>
-              <motion.a
-                whileHover={iconHover}
-                className="cursor-pointer text-[28px]"
-              >
-                <AiFillTwitterCircle />
+              <motion.a whileHover={iconHover} className="cursor-pointer">
+                <FaSquareXTwitter />
               </motion.a>
               <motion.a whileHover={iconHover} className="cursor-pointer">
                 <FaLinkedin />
