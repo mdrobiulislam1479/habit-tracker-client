@@ -10,12 +10,14 @@ import PrivateRoute from "./PrivateRoute";
 import HabitDetails from "../Pages/HabitDetails";
 import NotFound from "../Pages/NotFound";
 import ProgressDashboard from "../Components/ProgressDashboard";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <NotFound />,
+    hydrateFallbackElement: <LoadingSpinner />,
     children: [
       {
         path: "/",

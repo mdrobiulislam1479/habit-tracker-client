@@ -27,3 +27,17 @@ Habit Tracker is a modern habit tracking web application that helps users build 
 - **Notifications:** React Toastify
 
 ---
+
+## 📦 Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/mdrobiulislam1479/habit-tracker-client.git
+
+cd habit-tracker-client
+
+npm install
+
+npm run dev
+
