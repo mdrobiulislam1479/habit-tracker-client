@@ -7,19 +7,28 @@ import { PuffLoader } from "react-spinners";
 import ThemeToggle from "../theme/ThemeToggle";
 
 export default function Header() {
+  // mobile menu open/close state
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // auth context load (user + signOut function)
   const { user, signOutUser, loading } = use(AuthContext);
+
+  // dropdown element reference
   const dropdownRef = useRef(null);
 
+  // logout handler
   const handleLogout = async () => {
     await signOutUser();
     toast.success("Logout successful!");
   };
 
+  // close mobile menu when a nav item is clicked
   const handleNavClick = () => setMenuOpen(false);
 
+  // reusable navigation links
   const list = (
     <>
+      {/* Home */}
       <NavLink
         onClick={handleNavClick}
         to="/"
@@ -27,6 +36,8 @@ export default function Header() {
       >
         Home
       </NavLink>
+
+      {/* Add Habit */}
       <NavLink
         onClick={handleNavClick}
         to="/add-habit"
@@ -34,6 +45,8 @@ export default function Header() {
       >
         Add Habit
       </NavLink>
+
+      {/* My Habits */}
       <NavLink
         onClick={handleNavClick}
         to="/my-habits"
@@ -41,17 +54,8 @@ export default function Header() {
       >
         My Habits
       </NavLink>
-      {user ? (
-        <NavLink
-          onClick={handleNavClick}
-          to="/dashboard"
-          className="hover:text-green-500 transition-colors"
-        >
-          Dashboard
-        </NavLink>
-      ) : (
-        ""
-      )}
+
+      {/* Browse Public Habits */}
       <NavLink
         onClick={handleNavClick}
         to="/browse-public-habits"
@@ -59,28 +63,48 @@ export default function Header() {
       >
         Browse Public Habits
       </NavLink>
+
+      {/* Dashboard — Only for logged-in users */}
+      {user && (
+        <NavLink
+          onClick={handleNavClick}
+          to="/dashboard"
+          className="hover:text-green-500 transition-colors"
+        >
+          Dashboard
+        </NavLink>
+      )}
     </>
   );
 
   return (
-    <header className="bg-primary shadow-sm border-b border-gray-200 fixed w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to={"/"}>
-          <img src={Logo} alt="Logo" className="h-10 object-contain" />
+    <header className="bg-primary/30 backdrop-blur-xl shadow-sm sticky top-0 w-full z-50">
+      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link to={"/"} className="flex items-center">
+          <img src={Logo} alt="Logo" className="h-18 object-contain" />
+          <p className="text-3xl font-bold">
+            Habit<span className="text-secondary">Tracker</span>
+          </p>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 text-gray-700 font-medium">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-6 text-accent font-medium">
           {list}
         </nav>
 
+        {/* Desktop Right Side — Theme + User Dropdown */}
         <div
           className="hidden lg:flex items-center gap-3 relative"
           ref={dropdownRef}
         >
           <ThemeToggle />
+
+          {/* Loading Spinner */}
           {loading ? (
             <PuffLoader size={40} color="green" />
           ) : !user ? (
+            // If NO user → Show Login + Signup
             <>
               <Link
                 to="/login"
@@ -96,27 +120,33 @@ export default function Header() {
               </Link>
             </>
           ) : (
+            // If user is logged in → Show User Avatar Dropdown
             <>
               <div className="dropdown">
                 <div tabIndex={0} role="button">
+                  {/* Avatar */}
                   <img
                     src={
                       user.photoURL ||
                       "https://img.icons8.com/glyph-neue/64/user-male-circle.png"
                     }
                     alt="User Avatar"
-                    className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+                    className="w-10 h-10 rounded-full border border-secondary/70 object-cover"
                   />
                 </div>
+
+                {/* Dropdown Content */}
                 <ul
                   tabIndex="-1"
-                  className="dropdown-content menu  rounded-box z-1 w-52 p-2 shadow-sm"
+                  className="dropdown-content menu rounded-box z-1 w-52 p-2 shadow-sm"
                 >
-                  <div className="absolute right-40  w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-3 text-sm">
+                  <div className="absolute right-40 w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-3 text-sm">
                     <p className="font-medium text-gray-800">
                       {user.displayName}
                     </p>
                     <p className="text-gray-500 text-xs mb-3">{user.email}</p>
+
+                    {/* Logout Button */}
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-white bg-green-500 hover:bg-green-600 rounded-md"
@@ -129,12 +159,15 @@ export default function Header() {
             </>
           )}
         </div>
+
+        {/* Mobile Menu Button */}
         <div className="lg:hidden flex items-center gap-2">
           <ThemeToggle />
           <button
             className="flex flex-col justify-center items-center w-8 h-8 border border-gray-300 rounded-md cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
           >
+            {/* Hamburger Animation Lines */}
             <span
               className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
                 menuOpen ? "rotate-45 translate-y-1.5" : ""
@@ -154,11 +187,15 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <nav className="lg:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
           {list}
+
+          {/* Mobile User Section */}
           <div className="mt-3 flex flex-col gap-2 border-t border-gray-200 pt-3">
             {!user ? (
+              // If user not logged in → show login/signup
               <>
                 <Link
                   to="/login"
@@ -176,6 +213,7 @@ export default function Header() {
                 </Link>
               </>
             ) : (
+              // If logged in → Show profile + logout
               <div className="flex justify-between items-center gap-2">
                 <div className="flex items-center gap-2">
                   <img
@@ -186,11 +224,14 @@ export default function Header() {
                     alt="User Avatar"
                     className="w-8 h-8 rounded-full border border-gray-300"
                   />
+
                   <div>
                     <p className="text-sm font-medium">{user.displayName}</p>
                     <p className="text-xs text-gray-500">{user.email}</p>
                   </div>
                 </div>
+
+                {/* Mobile Logout */}
                 <button
                   onClick={() => {
                     handleLogout();
