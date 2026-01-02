@@ -38,13 +38,13 @@ export default function FeaturedHabits() {
   };
 
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center my-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
             Featured Habits
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-accent/80 max-w-2xl mx-auto">
             Discover the most popular and recently added habits from our
             community.
           </p>

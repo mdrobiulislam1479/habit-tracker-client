@@ -42,12 +42,12 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="py-16 bg-white" id="how-it-works">
+    <section className="py-16" id="how-it-works">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
           How It Works
         </h2>
-        <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+        <p className="text-accent/80 mb-12 max-w-2xl mx-auto">
           Build better habits in just three easy steps.
         </p>
 
@@ -61,15 +61,15 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="bg-gray-50 p-8 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform"
+              className="bg-primary p-8 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform"
               variants={cardVariants}
             >
               <div className="flex flex-col items-center">
                 {step.icon}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-accent mb-2">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{step.description}</p>
+                <p className="text-accent/80 text-sm">{step.description}</p>
               </div>
             </motion.div>
           ))}

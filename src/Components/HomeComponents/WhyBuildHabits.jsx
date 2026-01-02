@@ -49,12 +49,12 @@ const WhyBuildHabits = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50" id="why-build-habits">
+    <section className="py-16" id="why-build-habits">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
           Why Build Habits?
         </h2>
-        <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+        <p className="text-accent/80 mb-12 max-w-2xl mx-auto">
           Building strong habits is the foundation of personal growth and
           success.
         </p>
@@ -69,16 +69,16 @@ const WhyBuildHabits = () => {
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-md cursor-pointer"
+              className="bg-primary p-8 rounded-2xl shadow-md cursor-pointer"
               variants={cardVariants}
               whileHover="hover"
             >
               <div className="flex flex-col items-center">
                 {benefit.icon}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-accent mb-2">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{benefit.description}</p>
+                <p className="text-accent/80 text-sm">{benefit.description}</p>
               </div>
             </motion.div>
           ))}

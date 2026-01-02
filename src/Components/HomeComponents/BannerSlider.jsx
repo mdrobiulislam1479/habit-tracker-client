@@ -41,7 +41,7 @@ const BannerSlider = () => {
   };
 
   return (
-    <div className="mt-16">
+    <div>
       <Swiper
         modules={[EffectFade, Pagination, Autoplay]}
         spaceBetween={30}
@@ -83,7 +83,7 @@ const BannerSlider = () => {
                   {slide.description}
                 </motion.p>
                 <Link
-                  className="mt-6 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-5 rounded-lg transition"
+                  className="mt-6 bg-secondary hover:bg-secondary/80 text-white font-medium py-2 px-5 rounded-lg transition"
                   to="/add-habit"
                 >
                   Get Started

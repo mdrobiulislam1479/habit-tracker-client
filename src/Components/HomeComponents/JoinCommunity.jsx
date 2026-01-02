@@ -45,12 +45,12 @@ const JoinCommunity = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50" id="community">
+    <section className="py-16" id="community">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
           Join Our Community
         </h2>
-        <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+        <p className="text-accent/80 mb-12 max-w-2xl mx-auto">
           Stay motivated by connecting with people who share your passion for
           self-improvement.
         </p>
@@ -65,16 +65,16 @@ const JoinCommunity = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-md cursor-pointer"
+              className="bg-primary p-8 rounded-2xl shadow-md cursor-pointer"
               variants={cardVariants}
               whileHover="hover"
             >
               <div className="flex flex-col items-center">
                 {feature.icon}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-accent mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
+                <p className="text-accent/80 text-sm">{feature.description}</p>
               </div>
             </motion.div>
           ))}
@@ -85,7 +85,7 @@ const JoinCommunity = () => {
           <div className="mt-10">
             <Link
               to="/login"
-              className=" bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition"
+              className=" bg-secondary hover:bg-secondary/80 text-white font-medium py-3 px-6 rounded-lg transition"
             >
               Join Now
             </Link>
