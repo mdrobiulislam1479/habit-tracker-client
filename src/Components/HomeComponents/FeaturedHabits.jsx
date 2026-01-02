@@ -22,7 +22,7 @@ export default function FeaturedHabits() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-32 bg-gray-50">
+      <div className="flex items-center justify-center h-32">
         <BeatLoader color="green" />
       </div>
     );

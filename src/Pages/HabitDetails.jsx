@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-
 import { IoMdPricetags } from "react-icons/io";
+import { FiCheckCircle, FiTrendingUp, FiUser, FiMail } from "react-icons/fi";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
 export default function HabitDetails() {
@@ -57,8 +57,15 @@ export default function HabitDetails() {
 
   if (!habit) {
     return (
-      <div className="flex items-center justify-center h-64 text-lg text-gray-500">
-        Habit not found.
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-slate-700 mb-2">
+            Habit not found
+          </h2>
+          <p className="text-slate-500">
+            The habit you're looking for doesn't exist.
+          </p>
+        </div>
       </div>
     );
   }
@@ -70,102 +77,143 @@ export default function HabitDetails() {
   );
 
   return (
-    <motion.div
-      className="max-w-7xl mx-5 xl:mx-auto p-6 mt-24 mb-10 rounded-2xl shadow-lg border border-green-500 bg-white"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <title>{habit.title}</title>
-
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
       <motion.div
-        className="flex flex-col sm:flex-row gap-6"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.2 },
-          },
-        }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        {habit.image && (
-          <motion.img
-            src={habit.image}
-            alt={habit.title}
-            className="w-full sm:w-1/3 max-h-78 rounded-lg object-cover border border-green-400"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
-        )}
+        <title>{habit.title}</title>
 
+        {/* Header Section */}
         <motion.div
-          className="flex-1"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          className="bg-primary rounded-2xl shadow-xl overflow-hidden border border-secondary/10"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">
-            {habit.title}
-          </h2>
-
-          <p className="text-gray-600 mb-3">{habit.description}</p>
-
-          <p className="text-sm text-gray-700 font-medium mb-2 flex items-center gap-2">
-            <IoMdPricetags /> Category:{" "}
-            <span className="text-green-600">{habit.category}</span>
-          </p>
-
-          <motion.div
-            className="flex items-center gap-3 mb-3"
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold">
-              🔥 {habit.currentStreak || 0} Day Streak
-            </span>
-          </motion.div>
-
-          <div className="mb-5">
-            <div className="flex justify-between text-sm font-semibold text-gray-600 mb-1">
-              <span>Progress (Last 30 Days)</span>
-              <span>{progress}%</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div className="grid lg:grid-cols-5 gap-0">
+            {/* Image Section */}
+            {habit.image && (
               <motion.div
-                className="bg-green-500 h-3 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-              />
-            </div>
-          </div>
+                className="lg:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <img
+                  src={habit.image}
+                  alt={habit.title}
+                  className="w-full h-full object-cover min-h-[300px] lg:min-h-[500px]"
+                />
+              </motion.div>
+            )}
 
-          <div className="text-sm text-gray-600 mb-5">
-            <p>
-              <strong>Creator:</strong> {habit.userName}
-            </p>
-            <p>
-              <strong>Email:</strong> {habit.userEmail}
-            </p>
-          </div>
+            {/* Content Section */}
+            <motion.div
+              className={`${
+                habit.image ? "lg:col-span-3" : "lg:col-span-5"
+              } p-8 lg:p-10`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {/* Title & Category */}
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm font-medium border border-emerald-200">
+                    <IoMdPricetags className="text-base" />
+                    {habit.category}
+                  </span>
+                </div>
+                <h1 className="text-3xl lg:text-4xl font-bold text-accent mb-3 leading-tight">
+                  {habit.title}
+                </h1>
+                <p className="text-accent/80 text-lg leading-relaxed">
+                  {habit.description}
+                </p>
+              </div>
 
-          <motion.button
-            onClick={handleMarkComplete}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-sm"
-          >
-            Mark Complete
-          </motion.button>
+              {/* Streak Badge */}
+              <motion.div
+                className="mb-8"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
+                <div className="inline-flex items-center gap-2 px-5 py-3 bg-linear-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl">
+                  <span className="text-2xl">🔥</span>
+                  <div>
+                    <p className="text-sm text-amber-700 font-medium">
+                      Current Streak
+                    </p>
+                    <p className="text-2xl font-bold text-amber-900">
+                      {habit.currentStreak || 0} Days
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Progress Section */}
+              <div className="mb-8 p-6 bg-slate-50 rounded-xl border border-slate-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <FiTrendingUp className="text-secondary text-xl" />
+                    <span className="font-semibold text-slate-800">
+                      30-Day Progress
+                    </span>
+                  </div>
+                  <span className="text-2xl font-bold text-secondary">
+                    {progress}%
+                  </span>
+                </div>
+                <div className="relative w-full bg-slate-200 rounded-full h-4 overflow-hidden shadow-inner">
+                  <motion.div
+                    className="absolute top-0 left-0 h-full bg-secondary rounded-full shadow-lg"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+                  />
+                </div>
+                <p className="text-xs text-slate-500 mt-2">
+                  {habit.currentStreak || 0} of {streakGoal} days completed
+                </p>
+              </div>
+
+              {/* Creator Info */}
+              <div className="mb-8 p-5 bg-slate-50 rounded-xl border border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-3">
+                  Created By
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <FiUser className="text-secondary shrink-0" />
+                    <span className="font-medium">{habit.userName}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-600">
+                    <FiMail className="text-secondary shrink-0" />
+                    <span className="text-sm">{habit.userEmail}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <motion.button
+                onClick={handleMarkComplete}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0 10px 25px -5px rgba(16, 185, 129, 0.3)",
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-4 bg-secondary hover:bg-secondary/80 text-white font-semibold rounded-xl shadow-lg transition-all duration-200 cursor-pointer"
+              >
+                <FiCheckCircle className="text-xl" />
+                Mark as Complete Today
+              </motion.button>
+            </motion.div>
+          </div>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
