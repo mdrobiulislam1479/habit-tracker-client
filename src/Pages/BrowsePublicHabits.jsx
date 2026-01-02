@@ -51,7 +51,7 @@ export default function BrowsePublicHabits() {
 
   return (
     <motion.section
-      className="py-12 bg-gray-50 min-h-screen"
+      className="pb-12 min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -64,10 +64,10 @@ export default function BrowsePublicHabits() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
             Browse Public Habits
           </h2>
-          <p className="text-gray-600">
+          <p className="text-accent/80">
             Explore and discover new habits to add to your routine.
           </p>
         </motion.div>

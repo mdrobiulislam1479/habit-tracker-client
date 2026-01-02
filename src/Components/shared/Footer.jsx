@@ -21,14 +21,17 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <motion.div
-            className=""
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <Link to={"/"}>
-              <img src={Logo} alt="Logo" className="h-12 object-contain" />
+            {/* Logo */}
+            <Link to={"/"} className="flex items-center -ml-3 -mb-5">
+              <img src={Logo} alt="Logo" className="h-18 object-contain" />
+              <p className="text-3xl font-bold text-[#222831]">
+                Habit<span className="text-secondary">Tracker</span>
+              </p>
             </Link>
 
             <p className="text-sm text-gray-600 mt-3">
@@ -42,7 +45,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <h3 className="text-lg font-medium mb-2">Contact</h3>
+            <h3 className="text-lg font-medium mb-2 text-[#222831]">Contact</h3>
             <ul className="text-sm space-y-1 text-gray-700">
               <li>Email: example@gmail.com</li>
               <li>Phone: +8801XXXXXXXXX</li>
@@ -56,7 +59,7 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <h3 className="text-lg font-medium mb-2">Legal</h3>
+            <h3 className="text-lg font-medium mb-2 text-[#222831]">Legal</h3>
             <ul className="text-sm space-y-1 text-gray-700">
               <li>
                 <a className="hover:underline cursor-pointer">
@@ -75,7 +78,9 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <h3 className="text-lg font-medium mb-2">Follow Us</h3>
+            <h3 className="text-lg font-medium mb-2 text-[#222831]">
+              Follow Us
+            </h3>
             <div className="flex gap-4 text-gray-700 text-2xl">
               <motion.a whileHover={iconHover} className="cursor-pointer">
                 <FaFacebook />

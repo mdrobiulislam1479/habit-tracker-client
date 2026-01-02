@@ -169,17 +169,17 @@ export default function Header() {
           >
             {/* Hamburger Animation Lines */}
             <span
-              className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
+              className={`block w-5 h-0.5 bg-accent transition-transform duration-300 ${
                 menuOpen ? "rotate-45 translate-y-1.5" : ""
               }`}
             ></span>
             <span
-              className={`block w-5 h-0.5 bg-gray-700 my-1 transition-opacity duration-300 ${
+              className={`block w-5 h-0.5 bg-accent my-1 transition-opacity duration-300 ${
                 menuOpen ? "opacity-0" : "opacity-100"
               }`}
             ></span>
             <span
-              className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
+              className={`block w-5 h-0.5 bg-accent transition-transform duration-300 ${
                 menuOpen ? "-rotate-45 -translate-y-1.5" : ""
               }`}
             ></span>
@@ -189,11 +189,11 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
-        <nav className="lg:hidden bg-gray-50 border-t border-gray-200 py-3 px-4 flex flex-col gap-3 text-gray-700 font-medium">
+        <nav className="lg:hidden bg-primary border-t border-secondary/50 py-3 px-4 flex flex-col gap-3 text-accent font-medium">
           {list}
 
           {/* Mobile User Section */}
-          <div className="mt-3 flex flex-col gap-2 border-t border-gray-200 pt-3">
+          <div className="mt-3 flex flex-col gap-2 border-t border-secondary/50 pt-3">
             {!user ? (
               // If user not logged in → show login/signup
               <>
