@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import { PuffLoader } from "react-spinners";
+import ThemeToggle from "../theme/ThemeToggle";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,7 +63,7 @@ export default function Header() {
   );
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 fixed w-full z-50">
+    <header className="bg-primary shadow-sm border-b border-gray-200 fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link to={"/"}>
           <img src={Logo} alt="Logo" className="h-10 object-contain" />
@@ -76,6 +77,7 @@ export default function Header() {
           className="hidden lg:flex items-center gap-3 relative"
           ref={dropdownRef}
         >
+          <ThemeToggle />
           {loading ? (
             <PuffLoader size={40} color="green" />
           ) : !user ? (
@@ -127,27 +129,29 @@ export default function Header() {
             </>
           )}
         </div>
-
-        <button
-          className="lg:hidden flex flex-col justify-center items-center w-8 h-8 border border-gray-300 rounded-md"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span
-            className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
-              menuOpen ? "rotate-45 translate-y-1.5" : ""
-            }`}
-          ></span>
-          <span
-            className={`block w-5 h-0.5 bg-gray-700 my-1 transition-opacity duration-300 ${
-              menuOpen ? "opacity-0" : "opacity-100"
-            }`}
-          ></span>
-          <span
-            className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-1.5" : ""
-            }`}
-          ></span>
-        </button>
+        <div className="lg:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            className="flex flex-col justify-center items-center w-8 h-8 border border-gray-300 rounded-md cursor-pointer"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span
+              className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
+                menuOpen ? "rotate-45 translate-y-1.5" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-5 h-0.5 bg-gray-700 my-1 transition-opacity duration-300 ${
+                menuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            ></span>
+            <span
+              className={`block w-5 h-0.5 bg-gray-700 transition-transform duration-300 ${
+                menuOpen ? "-rotate-45 -translate-y-1.5" : ""
+              }`}
+            ></span>
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
