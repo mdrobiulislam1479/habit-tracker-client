@@ -1,7 +1,7 @@
 import { use, useRef, useState } from "react";
-import Logo from "../assets/logo.png";
+import Logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import { PuffLoader } from "react-spinners";
 
@@ -64,9 +64,9 @@ export default function Header() {
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link to={"/"}>
           <img src={Logo} alt="Logo" className="h-10 object-contain" />
-        </div>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-6 text-gray-700 font-medium">
           {list}

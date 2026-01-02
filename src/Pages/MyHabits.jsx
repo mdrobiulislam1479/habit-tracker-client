@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import LoadingSpinner from "../Components/LoadingSpinner";
+
 import { motion, AnimatePresence } from "framer-motion";
 import ProgressDashboard from "../Components/ProgressDashboard";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
 export default function MyHabits() {
   const { user } = useContext(AuthContext);

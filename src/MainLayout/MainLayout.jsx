@@ -1,6 +1,7 @@
-import Navbar from "../Components/Navbar";
 import { Outlet, useNavigation } from "react-router";
-import Footer from "../Components/Footer";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
+import Navbar from "../Components/shared/Navbar";
+import Footer from "../Components/shared/Footer";
 
 const MainLayout = () => {
   const navigation = useNavigation();

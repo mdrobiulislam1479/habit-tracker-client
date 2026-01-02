@@ -12,7 +12,8 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import LoadingSpinner from "../Components/LoadingSpinner";
+import LoadingSpinner from "./shared/LoadingSpinner";
+
 
 export default function ProgressDashboard() {
   const { user } = useContext(AuthContext);

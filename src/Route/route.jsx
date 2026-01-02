@@ -10,7 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import HabitDetails from "../Pages/HabitDetails";
 import NotFound from "../Pages/NotFound";
 import ProgressDashboard from "../Components/ProgressDashboard";
-import LoadingSpinner from "../Components/LoadingSpinner";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
 export const router = createBrowserRouter([
   {

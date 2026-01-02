@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-import LoadingSpinner from "../Components/LoadingSpinner";
+
 import { IoMdPricetags } from "react-icons/io";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
 export default function HabitDetails() {
   const { id } = useParams();

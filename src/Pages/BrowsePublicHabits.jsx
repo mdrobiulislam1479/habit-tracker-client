@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { motion } from "framer-motion";
-import LoadingSpinner from "../Components/LoadingSpinner";
-import { CgProfile } from "react-icons/cg";
-import { IoMdPricetags } from "react-icons/io";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
+import Card from "../Components/cards/Card";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All Category");
 
-  const categories = ["All", "Morning", "Work", "Fitness", "Evening", "Study"];
+  const categories = [
+    "All Category",
+    "Morning",
+    "Work",
+    "Fitness",
+    "Evening",
+    "Study",
+  ];
 
   useEffect(() => {
     fetch("https://habit-tracker-sarver-1.vercel.app/habits")
@@ -36,7 +41,8 @@ export default function BrowsePublicHabits() {
 
   const filteredHabits = habits.filter((habit) => {
     const matchesCategory =
-      selectedCategory === "All" || habit.category === selectedCategory;
+      selectedCategory === "All Category" ||
+      habit.category === selectedCategory;
     const matchesSearch =
       habit.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       habit.description?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -77,16 +83,20 @@ export default function BrowsePublicHabits() {
             placeholder="Search habits..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-1/2 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
+            className="w-full md:w-1/4 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
           />
 
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full md:w-1/4 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
+            className="w-full md:w-40 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition select"
           >
             {categories.map((cat) => (
-              <option key={cat} value={cat}>
+              <option
+                key={cat}
+                value={cat}
+                className="checked:bg-green-500 checked:text-white"
+              >
                 {cat}
               </option>
             ))}
@@ -100,42 +110,7 @@ export default function BrowsePublicHabits() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredHabits.map((habit, index) => (
-              <motion.div
-                key={habit._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                className="bg-white shadow-md rounded-xl p-5 border border-gray-100 hover:shadow-lg transition"
-              >
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {habit.title}
-                </h3>
-                <p className="text-sm text-gray-600 mt-2 line-clamp-3">
-                  {habit.description || "No description available."}
-                </p>
-
-                <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
-                  {habit.userName && (
-                    <p className="flex items-center gap-1">
-                      <CgProfile />{" "}
-                      <span className="font-medium">{habit.userName}</span>
-                    </p>
-                  )}
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                    <IoMdPricetags />
-                    {habit.category || "General"}
-                  </span>
-                </div>
-
-                <div className="mt-4">
-                  <Link
-                    to={`/habit/${habit._id}`}
-                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full text-center"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </motion.div>
+              <Card key={index} habit={habit} index={index} />
             ))}
           </div>
         )}

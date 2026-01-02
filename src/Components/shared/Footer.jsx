@@ -1,7 +1,8 @@
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
-import Logo from "../assets/logo.png";
+import Logo from "../../assets/logo.png";
 import { motion } from "framer-motion";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { Link } from "react-router";
 
 export default function Footer() {
   const sectionVariants = {
@@ -26,7 +27,10 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <img src={Logo} alt="Logo" className="h-12 object-contain" />
+            <Link to={"/"}>
+              <img src={Logo} alt="Logo" className="h-12 object-contain" />
+            </Link>
+
             <p className="text-sm text-gray-600 mt-3">
               Build better habits, one day at a time.
             </p>
