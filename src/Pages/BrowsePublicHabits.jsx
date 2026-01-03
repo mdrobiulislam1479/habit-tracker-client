@@ -9,14 +9,7 @@ export default function BrowsePublicHabits() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Category");
 
-  const categories = [
-    "All Category",
-    "Morning",
-    "Work",
-    "Fitness",
-    "Evening",
-    "Study",
-  ];
+  const categories = ["Morning", "Work", "Fitness", "Evening", "Study"];
 
   useEffect(() => {
     fetch("https://habit-tracker-sarver-1.vercel.app/habits")
@@ -57,9 +50,10 @@ export default function BrowsePublicHabits() {
       transition={{ duration: 0.5 }}
     >
       <title>Browse Public Habits</title>
-      <div className="max-w-7xl mx-auto px-4">
+
+      <div>
         <motion.div
-          className="text-center my-12"
+          className="text-center mt-12"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -71,49 +65,81 @@ export default function BrowsePublicHabits() {
             Explore and discover new habits to add to your routine.
           </p>
         </motion.div>
+        <div className="flex gap-8 py-10 px-4 lg:px-6 max-w-7xl mx-auto">
+          {/* Sidebar */}
+          <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border border-accent/5 h-fit">
+            {/* Search */}
+            <div className="mb-6">
+              <h4 className="font-semibold mb-2">Search</h4>
+              <input
+                type="text"
+                placeholder="Search habits..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full  border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
+              />
+            </div>
 
-        <motion.div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.4 }}
-        >
-          <input
-            type="text"
-            placeholder="Search habits..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-1/4 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
-          />
+            {/* Category */}
+            <div>
+              <h4 className="font-semibold mb-2">Category</h4>
+              <ul className="space-y-2">
+                {categories.map((cat) => (
+                  <li key={cat} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedCategory === cat}
+                      value={cat}
+                      onChange={() =>
+                        setSelectedCategory(
+                          selectedCategory === cat ? "All Category" : cat
+                        )
+                      }
+                    />
+                    <label>{cat}</label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
 
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full md:w-40 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition select"
-          >
-            {categories.map((cat) => (
-              <option
-                key={cat}
-                value={cat}
-                className="checked:bg-green-500 checked:text-white"
-              >
-                {cat}
-              </option>
-            ))}
-          </select>
-        </motion.div>
+          {/* Main */}
+          <main className="flex-1">
+            {/* Top Bar */}
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-sm">
+                Showing {filteredHabits.length} of {habits.length} products
+              </p>
+              <select className="border rounded px-3 py-2 select w-30">
+                <option>Newest</option>
+                <option>Oldest</option>
+              </select>
+            </div>
 
-        {filteredHabits.length === 0 ? (
-          <p className="text-gray-500 text-center mt-10">
-            No habits found for your search/filter.
-          </p>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredHabits.map((habit, index) => (
-              <Card key={index} habit={habit} index={index} />
-            ))}
-          </div>
-        )}
+            {/* Product Grid */}
+            <div
+              className="
+        grid 
+        gap-6
+        sm:grid-cols-2
+        lg:grid-cols-3
+        xl:grid-cols-4
+      "
+            >
+              {filteredHabits.length === 0 ? (
+                <p className="text-gray-500 text-center mt-10 col-span-4">
+                  No habits found matching your criteria.
+                </p>
+              ) : (
+                <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {filteredHabits.map((habit, index) => (
+                    <Card key={index} habit={habit} index={index} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </main>
+        </div>
       </div>
     </motion.section>
   );

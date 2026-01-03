@@ -20,30 +20,33 @@ const Card = ({ habit, index }) => {
         />
       </div>
 
-      <h3 className="text-lg font-semibold text-accent">{habit.title}</h3>
-      <p className="text-sm text-accent/80 mt-2 line-clamp-3">
-        {habit.description || "No description available."}
-      </p>
+      <div className="flex flex-col justify-between h-42">
+        <h3 className="text-lg font-semibold text-accent">{habit.title}</h3>
+        <p className="text-sm text-accent/80 mt-2 line-clamp-3">
+          {habit.description || "No description available."}
+        </p>
 
-      <div className="flex items-center justify-between mt-3 text-sm text-accent/60">
-        {habit.userName && (
-          <p className="flex items-center gap-1">
-            <CgProfile /> <span className="font-medium">{habit.userName}</span>
-          </p>
-        )}
-        <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-          <IoMdPricetags />
-          {habit.category || "General"}
-        </span>
-      </div>
+        <div className="flex items-center justify-between mt-3 text-sm text-accent/60">
+          {habit.userName && (
+            <p className="flex items-center gap-1">
+              <CgProfile />{" "}
+              <span className="font-medium">{habit.userName}</span>
+            </p>
+          )}
+          <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+            <IoMdPricetags />
+            {habit.category || "General"}
+          </span>
+        </div>
 
-      <div className="mt-4">
-        <Link
-          to={`/habit/${habit._id}`}
-          className="inline-block px-4 py-2 text-sm font-medium text-white bg-secondary rounded-lg hover:bg-secondary/80 transition w-full text-center"
-        >
-          View Details
-        </Link>
+        <div className="mt-4">
+          <Link
+            to={`/habit/${habit._id}`}
+            className="inline-block px-4 py-2 text-sm font-medium text-white bg-secondary rounded-lg hover:bg-secondary/80 transition w-full text-center"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
