@@ -2,6 +2,7 @@ import BannerSlider from "../Components/HomeComponents/BannerSlider";
 import FeaturedHabits from "../Components/HomeComponents/FeaturedHabits";
 import HowItWorks from "../Components/HomeComponents/HowItWorks ";
 import JoinCommunity from "../Components/HomeComponents/JoinCommunity";
+import NewsletterSignup from "../Components/HomeComponents/NewsletterSignup";
 import PremiumPlan from "../Components/HomeComponents/PremiumPlan";
 import WhyBuildHabits from "../Components/HomeComponents/WhyBuildHabits";
 
@@ -15,6 +16,7 @@ const Home = () => {
       <HowItWorks />
       <PremiumPlan />
       <JoinCommunity />
+      <NewsletterSignup />
     </div>
   );
 };
