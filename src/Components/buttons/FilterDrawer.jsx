@@ -39,7 +39,7 @@ const FilterDrawer = ({
       </div>
 
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-xl transform transition-transform lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-80 bg-primary shadow-xl transform transition-transform lg:hidden ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -48,7 +48,7 @@ const FilterDrawer = ({
             <h2 className="text-xl font-semibold">Filters</h2>
             <button
               onClick={toggleDrawer}
-              className="p-2 rounded hover:bg-gray-100"
+              className="p-2 rounded hover:bg-base-100 cursor-pointer"
               aria-label="Close filters"
             >
               ✕

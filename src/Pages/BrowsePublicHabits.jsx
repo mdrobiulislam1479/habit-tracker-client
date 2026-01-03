@@ -9,7 +9,9 @@ export default function BrowsePublicHabits() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Category");
+  const [sortOrder, setSortOrder] = useState("newest");
 
+  // Static categories
   const categories = ["Morning", "Work", "Fitness", "Evening", "Study"];
 
   useEffect(() => {
@@ -33,15 +35,30 @@ export default function BrowsePublicHabits() {
     );
   }
 
-  const filteredHabits = habits.filter((habit) => {
-    const matchesCategory =
-      selectedCategory === "All Category" ||
-      habit.category === selectedCategory;
-    const matchesSearch =
-      habit.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      habit.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Filter + Sort Logic
+  const filteredHabits = habits
+    .filter((habit) => {
+      // Category match OR All Category allowed
+      const matchesCategory =
+        selectedCategory === "All Category" ||
+        habit.category === selectedCategory;
+
+      // Search match (title or description)
+      const matchesSearch =
+        habit.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        habit.description?.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      // Sort newest first (latest date first)
+      if (sortOrder === "newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+
+      // Sort oldest first
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    });
 
   return (
     <motion.section
@@ -53,6 +70,7 @@ export default function BrowsePublicHabits() {
       <title>Browse Public Habits</title>
 
       <div>
+        {/* Header Section */}
         <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 10 }}
@@ -66,10 +84,12 @@ export default function BrowsePublicHabits() {
             Explore and discover new habits to add to your routine.
           </p>
         </motion.div>
+
+        {/* Layout Area */}
         <div className="flex gap-8 py-10 px-4 lg:px-6 max-w-7xl mx-auto">
-          {/* Sidebar */}
+          {/* Sidebar (Desktop Only) */}
           <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border border-accent/5 h-fit">
-            {/* Search */}
+            {/* Search Input */}
             <div className="mb-6">
               <h4 className="font-semibold mb-2">Search</h4>
               <input
@@ -77,11 +97,11 @@ export default function BrowsePublicHabits() {
                 placeholder="Search habits..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full  border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
               />
             </div>
 
-            {/* Category */}
+            {/* Category Filter */}
             <div>
               <h4 className="font-semibold mb-2">Category</h4>
               <ul className="space-y-2">
@@ -105,14 +125,16 @@ export default function BrowsePublicHabits() {
             </div>
           </aside>
 
-          {/* Main */}
+          {/* Main Content */}
           <main className="flex-1">
-            {/* Top Bar */}
+            {/* Top Bar: Showing Count + Sort Dropdown + Mobile Drawer */}
             <div className="flex items-center justify-between mb-6">
               <p className="text-sm">
                 Showing {filteredHabits.length} of {habits.length} products
               </p>
+
               <div className="flex items-center">
+                {/* Mobile Drawer */}
                 <FilterDrawer
                   categories={categories}
                   selectedCategory={selectedCategory}
@@ -120,9 +142,15 @@ export default function BrowsePublicHabits() {
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
                 />
-                <select className="border rounded px-3 py-2 select w-30 cursor-pointer">
-                  <option>Newest</option>
-                  <option>Oldest</option>
+
+                {/* Sort Dropdown */}
+                <select
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                  className="border rounded px-3 py-2 select w-30 cursor-pointer"
+                >
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
                 </select>
               </div>
             </div>
@@ -130,19 +158,21 @@ export default function BrowsePublicHabits() {
             {/* Product Grid */}
             <div
               className="
-        grid 
-        gap-6
-        sm:grid-cols-2
-        lg:grid-cols-3
-        xl:grid-cols-4
-      "
+                grid 
+                gap-6
+                sm:grid-cols-2
+                lg:grid-cols-3
+                xl:grid-cols-4
+              "
             >
+              {/* If No Result */}
               {filteredHabits.length === 0 ? (
                 <p className="text-gray-500 text-center mt-10 col-span-4">
                   No habits found matching your criteria.
                 </p>
               ) : (
                 <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {/* Map through habits */}
                   {filteredHabits.map((habit, index) => (
                     <Card key={index} habit={habit} index={index} />
                   ))}
