@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 import Card from "../Components/cards/Card";
+import FilterDrawer from "../Components/buttons/FilterDrawer";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
@@ -95,6 +96,7 @@ export default function BrowsePublicHabits() {
                           selectedCategory === cat ? "All Category" : cat
                         )
                       }
+                      className="cursor-pointer"
                     />
                     <label>{cat}</label>
                   </li>
@@ -110,10 +112,19 @@ export default function BrowsePublicHabits() {
               <p className="text-sm">
                 Showing {filteredHabits.length} of {habits.length} products
               </p>
-              <select className="border rounded px-3 py-2 select w-30">
-                <option>Newest</option>
-                <option>Oldest</option>
-              </select>
+              <div className="flex items-center">
+                <FilterDrawer
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                />
+                <select className="border rounded px-3 py-2 select w-30 cursor-pointer">
+                  <option>Newest</option>
+                  <option>Oldest</option>
+                </select>
+              </div>
             </div>
 
             {/* Product Grid */}
