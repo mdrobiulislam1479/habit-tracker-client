@@ -11,6 +11,8 @@ import HabitDetails from "../Pages/HabitDetails";
 import NotFound from "../Pages/NotFound";
 import ProgressDashboard from "../Components/ProgressDashboard";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
+import About from "../Pages/About";
+import Contact from "../Pages/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -53,11 +55,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/habit/:id",
-        element: (
-          <PrivateRoute>
-            <HabitDetails />
-          </PrivateRoute>
-        ),
+        element: <HabitDetails />,
       },
       {
         path: "/dashboard",
@@ -66,6 +64,14 @@ export const router = createBrowserRouter([
             <ProgressDashboard />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },

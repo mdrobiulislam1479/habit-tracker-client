@@ -37,24 +37,6 @@ export default function Header() {
         Home
       </NavLink>
 
-      {/* Add Habit */}
-      <NavLink
-        onClick={handleNavClick}
-        to="/add-habit"
-        className="hover:text-green-500 transition-colors"
-      >
-        Add Habit
-      </NavLink>
-
-      {/* My Habits */}
-      <NavLink
-        onClick={handleNavClick}
-        to="/my-habits"
-        className="hover:text-green-500 transition-colors"
-      >
-        My Habits
-      </NavLink>
-
       {/* Browse Public Habits */}
       <NavLink
         onClick={handleNavClick}
@@ -64,15 +46,52 @@ export default function Header() {
         Browse Public Habits
       </NavLink>
 
+      {/* About */}
+      <NavLink
+        onClick={handleNavClick}
+        to="/about"
+        className="hover:text-green-500 transition-colors"
+      >
+        About
+      </NavLink>
+
+      {/* Contact */}
+      <NavLink
+        onClick={handleNavClick}
+        to="/contact"
+        className="hover:text-green-500 transition-colors"
+      >
+        Contact
+      </NavLink>
+
       {/* Dashboard — Only for logged-in users */}
       {user && (
-        <NavLink
-          onClick={handleNavClick}
-          to="/dashboard"
-          className="hover:text-green-500 transition-colors"
-        >
-          Dashboard
-        </NavLink>
+        <>
+          {/*Dashboard*/}
+          <NavLink
+            onClick={handleNavClick}
+            to="/dashboard"
+            className="hover:text-green-500 transition-colors"
+          >
+            Dashboard
+          </NavLink>
+          {/* Add Habit */}
+          <NavLink
+            onClick={handleNavClick}
+            to="/add-habit"
+            className="hover:text-green-500 transition-colors"
+          >
+            Add Habit
+          </NavLink>
+          {/* My Habits */}
+          <NavLink
+            onClick={handleNavClick}
+            to="/my-habits"
+            className="hover:text-green-500 transition-colors"
+          >
+            My Habits
+          </NavLink>
+        </>
       )}
     </>
   );
@@ -131,7 +150,7 @@ export default function Header() {
                       "https://img.icons8.com/glyph-neue/64/user-male-circle.png"
                     }
                     alt="User Avatar"
-                    className="w-10 h-10 rounded-full border border-secondary/70 object-cover"
+                    className="w-10 h-10 rounded-full border border-secondary/70 object-cover cursor-pointer"
                   />
                 </div>
 
@@ -149,7 +168,7 @@ export default function Header() {
                     {/* Logout Button */}
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-white bg-green-500 hover:bg-green-600 rounded-md"
+                      className="w-full text-left px-4 py-2 text-sm text-white bg-green-500 hover:bg-green-600 rounded-md cursor-pointer"
                     >
                       Log out
                     </button>
