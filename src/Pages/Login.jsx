@@ -70,7 +70,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen lg:px-10 flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen lg:px-10 flex items-center justify-center">
       <title>Habit Tracker | Log In</title>
 
       <motion.div
@@ -83,7 +83,7 @@ const Login = () => {
       </motion.div>
 
       <motion.div
-        className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8"
+        className="w-full max-w-md sm:bg-primary rounded-lg sm:shadow-md p-8"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -92,7 +92,7 @@ const Login = () => {
 
         <form className="space-y-4" onSubmit={handleLogIn}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Email
             </label>
             <input
@@ -107,7 +107,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Password
             </label>
             <div className="relative">
@@ -130,7 +130,7 @@ const Login = () => {
             <div className="text-right mt-1">
               <button
                 type="button"
-                className="text-sm text-green-500 hover:underline"
+                className="text-sm text-green-500 hover:underline cursor-pointer"
               >
                 Forgot password?
               </button>
@@ -141,7 +141,7 @@ const Login = () => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             type="submit"
-            className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold transition"
+            className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold transition cursor-pointer"
           >
             Login
           </motion.button>
@@ -157,14 +157,14 @@ const Login = () => {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-md hover:bg-gray-100 transition"
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-md hover:bg-gray-100 hover:text-black transition cursor-pointer"
           >
             <FcGoogle size={24} />
             <span>Login with Google</span>
           </button>
         </motion.div>
 
-        <p className="text-sm text-center text-gray-600 mt-4">
+        <p className="text-sm text-center text-accent/80 mt-4">
           Don’t have an account?{" "}
           <Link to="/signup" className="text-green-500 hover:underline">
             Sign up

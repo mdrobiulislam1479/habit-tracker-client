@@ -81,7 +81,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen lg:px-10 pt-16 flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen lg:px-10 pt-16 flex items-center justify-center">
       <title>Habit Tracker | Register</title>
 
       <motion.div
@@ -94,7 +94,7 @@ export default function Signup() {
       </motion.div>
 
       <motion.div
-        className="w-full max-w-md sm:bg-white rounded-lg sm:shadow-md p-8"
+        className="w-full max-w-md sm:bg-primary rounded-lg sm:shadow-md p-8"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -103,7 +103,7 @@ export default function Signup() {
 
         <form className="space-y-4" onSubmit={handleRegister}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Name
             </label>
             <input
@@ -116,7 +116,7 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Photo URL
             </label>
             <input
@@ -128,7 +128,7 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Email
             </label>
             <input
@@ -141,7 +141,7 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-accent/80 mb-1">
               Password
             </label>
             <div className="relative">
@@ -196,7 +196,7 @@ export default function Signup() {
             type="submit"
             className={`w-full py-2 rounded-md font-semibold text-white transition ${
               allValid
-                ? "bg-green-500 hover:bg-green-600"
+                ? "bg-green-500 hover:bg-green-600 cursor-pointer"
                 : "bg-green-300 cursor-not-allowed"
             }`}
             disabled={!allValid}
@@ -215,14 +215,14 @@ export default function Signup() {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-md hover:bg-gray-100 transition"
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-md hover:bg-gray-100 transition hover:text-black cursor-pointer"
           >
             <FcGoogle size={24} />
             <span>Continue with Google</span>
           </button>
         </motion.div>
 
-        <p className="text-sm text-center text-gray-600 mt-4">
+        <p className="text-sm text-center text-accent/80 mt-4">
           Already have an account?{" "}
           <Link to="/login" className="text-green-500 hover:underline">
             Login

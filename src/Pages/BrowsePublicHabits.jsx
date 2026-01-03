@@ -88,7 +88,7 @@ export default function BrowsePublicHabits() {
         {/* Layout Area */}
         <div className="flex gap-8 py-10 px-4 lg:px-6 max-w-7xl mx-auto">
           {/* Sidebar (Desktop Only) */}
-          <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border border-accent/5 h-fit">
+          <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border-2 border-accent/5 h-fit">
             {/* Search Input */}
             <div className="mb-6">
               <h4 className="font-semibold mb-2">Search</h4>
