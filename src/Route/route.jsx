@@ -9,10 +9,12 @@ import BrowsePublicHabits from "../Pages/BrowsePublicHabits";
 import PrivateRoute from "./PrivateRoute";
 import HabitDetails from "../Pages/HabitDetails";
 import NotFound from "../Pages/NotFound";
-import ProgressDashboard from "../Components/ProgressDashboard";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
+import DashboardLayout from "../Components/DashboardLayout/DashboardLayout";
+import Progress from "../Pages/Progress";
+import Profile from "../Pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -25,22 +27,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      {
-        path: "/add-habit",
-        element: (
-          <PrivateRoute>
-            <AddHabit />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/my-habits",
-        element: (
-          <PrivateRoute>
-            <MyHabits />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "/browse-public-habits",
         element: <BrowsePublicHabits />,
@@ -57,14 +44,7 @@ export const router = createBrowserRouter([
         path: "/habit/:id",
         element: <HabitDetails />,
       },
-      {
-        path: "/dashboard",
-        element: (
-          <PrivateRoute>
-            <ProgressDashboard />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "/about",
         element: <About />,
@@ -72,6 +52,46 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    hydrateFallbackElement: <LoadingSpinner />,
+    children: [
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <Progress />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-habit",
+        element: (
+          <PrivateRoute>
+            <AddHabit />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-habits",
+        element: (
+          <PrivateRoute>
+            <MyHabits />
+          </PrivateRoute>
+        ),
       },
     ],
   },

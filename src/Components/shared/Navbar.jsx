@@ -75,22 +75,6 @@ export default function Header() {
           >
             Dashboard
           </NavLink>
-          {/* Add Habit */}
-          <NavLink
-            onClick={handleNavClick}
-            to="/add-habit"
-            className="hover:text-green-500 transition-colors"
-          >
-            Add Habit
-          </NavLink>
-          {/* My Habits */}
-          <NavLink
-            onClick={handleNavClick}
-            to="/my-habits"
-            className="hover:text-green-500 transition-colors"
-          >
-            My Habits
-          </NavLink>
         </>
       )}
     </>

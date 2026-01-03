@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState, useCallback } from "react";
-import { AuthContext } from "../Context/AuthContext";
+
 import {
   ResponsiveContainer,
   BarChart,
@@ -12,10 +12,11 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import LoadingSpinner from "./shared/LoadingSpinner";
 
+import { AuthContext } from "../Context/AuthContext";
+import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
-export default function ProgressDashboard() {
+export default function Progress() {
   const { user } = useContext(AuthContext);
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);

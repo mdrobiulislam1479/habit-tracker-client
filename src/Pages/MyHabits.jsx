@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 import { motion, AnimatePresence } from "framer-motion";
-import ProgressDashboard from "../Components/ProgressDashboard";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
 export default function MyHabits() {
