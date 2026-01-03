@@ -92,15 +92,15 @@ export default function Progress() {
   return (
     <section className="max-w-6xl mx-auto px-4 pt-22 pb-10">
       <title>Progress Dashboard</title>
-      <h2 className="text-3xl font-bold text-gray-800 mb-2 text-center">
+      <h2 className="text-3xl font-bold text-accent mb-2 text-center">
         Progress Analytics Dashboard
       </h2>
-      <p className="text-center text-gray-600 mb-8">
+      <p className="text-center text-accent/80 mb-8">
         Visualize your weekly progress and streak growth trends
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white border border-green-400 rounded-xl shadow p-5">
+        <div className="bg-primary border border-green-400 rounded-xl shadow p-5">
           <h3 className="text-lg font-semibold mb-4 text-green-600">
             Weekly Progress (%)
           </h3>
@@ -115,7 +115,7 @@ export default function Progress() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white border border-green-400 rounded-xl shadow p-5">
+        <div className="bg-primary border border-green-400 rounded-xl shadow p-5">
           <h3 className="text-lg font-semibold mb-4 text-green-600">
             Streak Growth (Last 30 Days)
           </h3>

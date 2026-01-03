@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-
 import { motion, AnimatePresence } from "framer-motion";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 
@@ -146,18 +145,18 @@ export default function MyHabits() {
     <section className="py-22 px-4 sm:px-6 lg:px-8">
       <title>Habit Tracker | My Habits</title>
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        <h2 className="text-3xl font-bold text-accent mb-6 text-center">
           My Habits
         </h2>
 
         {habits.length === 0 ? (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-accent/70">
             No habits found. Add one to get started!
           </p>
         ) : (
           <>
-            <div className="hidden md:block bg-white rounded-xl shadow border border-green-500 overflow-hidden">
-              <table className="min-w-full text-sm text-left text-gray-700">
+            <div className="hidden md:block bg-primary rounded-xl shadow border border-green-500 overflow-hidden">
+              <table className="min-w-full text-sm text-left text-accent">
                 <thead className="bg-green-500 text-white text-xs sm:text-sm uppercase font-semibold">
                   <tr>
                     <th className="py-3 px-4">Title</th>
@@ -172,15 +171,13 @@ export default function MyHabits() {
                     {habits.map((habit) => (
                       <motion.tr
                         key={habit._id}
-                        className="border-t border-green-500 hover:bg-gray-50 transition"
+                        className="border-t border-green-500 hover:bg-primary/20 transition"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <td className="py-3 px-4 font-medium text-gray-900">
-                          {habit.title}
-                        </td>
+                        <td className="py-3 px-4 font-medium">{habit.title}</td>
                         <td className="py-3 px-4">{habit.category}</td>
                         <td className="py-3 px-4 text-center">
                           {habit.currentStreak || 0}
@@ -258,7 +255,7 @@ export default function MyHabits() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setSelectedHabit(habit)}
-                        className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-md text-sm"
+                        className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-md text-sm cursor-pointer"
                       >
                         Update
                       </motion.button>
@@ -266,7 +263,7 @@ export default function MyHabits() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleDeleteHabit(habit._id)}
-                        className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
+                        className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm cursor-pointer"
                       >
                         Delete
                       </motion.button>
@@ -274,7 +271,7 @@ export default function MyHabits() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleMarkComplete(habit._id)}
-                        className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm"
+                        className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm  cursor-pointer"
                       >
                         Mark Complete
                       </motion.button>
@@ -295,7 +292,7 @@ export default function MyHabits() {
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-lg relative mx-3"
+                className="bg-primary rounded-2xl p-6 w-full max-w-lg shadow-lg relative mx-3"
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 50, opacity: 0 }}
@@ -324,7 +321,7 @@ export default function MyHabits() {
                   <select
                     name="category"
                     defaultValue={selectedHabit.category}
-                    className="w-full border p-2 rounded-lg"
+                    className="w-full border p-2 rounded-lg bg-base-100"
                     required
                   >
                     <option>Morning</option>
@@ -354,13 +351,13 @@ export default function MyHabits() {
                       type="text"
                       value={selectedHabit.userName}
                       readOnly
-                      className="border p-2 rounded-lg bg-gray-100"
+                      className="border p-2 rounded-lg bg-base-100"
                     />
                     <input
                       type="email"
                       value={selectedHabit.userEmail}
                       readOnly
-                      className="border p-2 rounded-lg bg-gray-100"
+                      className="border p-2 rounded-lg bg-base-100"
                     />
                   </div>
 
@@ -368,14 +365,14 @@ export default function MyHabits() {
                     <button
                       type="button"
                       onClick={() => setSelectedHabit(null)}
-                      className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                      className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 cursor-pointer"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={loading}
-                      className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+                      className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                       Update
                     </button>

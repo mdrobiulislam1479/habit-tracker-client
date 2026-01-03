@@ -100,7 +100,7 @@ export default function AddHabit() {
 
   return (
     <motion.section
-      className="max-w-3xl mx-3 md:mx-auto mt-24 mb-5 p-6 bg-white shadow rounded-lg"
+      className="max-w-3xl mx-3 md:mx-auto mt-24 mb-5 p-6 bg-primary shadow rounded-lg"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -154,7 +154,7 @@ export default function AddHabit() {
             value={habitData.category}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 bg-base-100"
           >
             <option value="">Select category</option>
             <option value="Morning">Morning</option>
@@ -201,7 +201,7 @@ export default function AddHabit() {
               type="text"
               value={user?.displayName || ""}
               readOnly
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-base-100"
             />
           </div>
           <div>
@@ -210,7 +210,7 @@ export default function AddHabit() {
               type="email"
               value={user?.email || ""}
               readOnly
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-base-100"
             />
           </div>
         </motion.div>
@@ -219,9 +219,8 @@ export default function AddHabit() {
           type="submit"
           disabled={loading}
           variants={item}
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition disabled:opacity-50"
+          className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition disabled:opacity-50 cursor-pointer"
         >
           {loading ? "Adding Habit..." : "Add Habit"}
         </motion.button>

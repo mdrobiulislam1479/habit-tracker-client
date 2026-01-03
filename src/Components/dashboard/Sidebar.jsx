@@ -28,16 +28,16 @@ const Sidebar = () => {
         {/* Logo */}
         <Link to={"/"} className="flex items-center">
           <img src={Logo} alt="Logo" className="h-18 object-contain" />
-          <p className="text-3xl font-bold">
+          <p className="text-3xl font-bold text-accent">
             Habit<span className="text-secondary">Tracker</span>
           </p>
         </Link>
 
         <button
           onClick={handleToggle}
-          className="p-4 focus:outline-none hover:bg-gray-200 transition cursor-pointer"
+          className="p-4 focus:outline-none hover:bg-base-100 transition cursor-pointer"
         >
-          <AiOutlineBars className="h-6 w-6" />
+          <AiOutlineBars className="h-6 w-6 text-accent" />
         </button>
       </div>
 
@@ -68,7 +68,7 @@ const Sidebar = () => {
             {/* Logo */}
             <Link to={"/"} className="flex items-center -ml-5 -mb-5">
               <img src={Logo} alt="Logo" className="h-18 object-contain" />
-              <p className="text-2xl font-bold -ml-2">
+              <p className="text-2xl font-bold -ml-2 text-accent">
                 Habit<span className="text-secondary">Tracker</span>
               </p>
             </Link>
@@ -76,9 +76,9 @@ const Sidebar = () => {
             {/* Close button only in mobile */}
             <button
               onClick={handleToggle}
-              className="lg:hidden p-1 rounded hover:bg-gray-200 cursor-pointer"
+              className="lg:hidden p-1 rounded hover:bg-base-100 cursor-pointer"
             >
-              <AiOutlineClose className="w-6 h-6 text-gray-600" />
+              <AiOutlineClose className="w-6 h-6 text-accent" />
             </button>
           </div>
 
