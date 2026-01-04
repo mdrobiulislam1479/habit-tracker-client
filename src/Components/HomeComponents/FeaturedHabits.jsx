@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { BeatLoader } from "react-spinners";
 import { motion } from "framer-motion";
 import Card from "../cards/Card";
+import CardSkeleton from "../cards/CardSkeleton";
 
 export default function FeaturedHabits() {
   const [habits, setHabits] = useState([]);
@@ -19,14 +19,6 @@ export default function FeaturedHabits() {
         setLoading(false);
       });
   }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-32">
-        <BeatLoader color="green" />
-      </div>
-    );
-  }
 
   const containerVariants = {
     hidden: {},
@@ -50,20 +42,22 @@ export default function FeaturedHabits() {
           </p>
         </div>
 
-        {habits.length === 0 ? (
-          <p className="text-gray-500 text-center">No habits found.</p>
-        ) : (
-          <motion.div
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {habits.map((habit, index) => (
-              <Card key={index} habit={habit} index={index} />
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {loading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <CardSkeleton key={i} />
+                ))
+              : habits.map((habit, index) => (
+                  <Card key={habit._id || index} habit={habit} index={index} />
+                ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
