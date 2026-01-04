@@ -4,6 +4,7 @@ import LoadingSpinner from "../Components/shared/LoadingSpinner";
 import Card from "../Components/cards/Card";
 import FilterDrawer from "../Components/buttons/FilterDrawer";
 import Pagination from "../Components/buttons/Pagination";
+import CardSkeleton from "../Components/cards/CardSkeleton";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
@@ -12,8 +13,9 @@ export default function BrowsePublicHabits() {
   const [selectedCategory, setSelectedCategory] = useState("All Category");
   const [sortOrder, setSortOrder] = useState("newest");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const limit = 9;
 
   // Static categories
   const categories = ["Morning", "Work", "Fitness", "Evening", "Study"];
@@ -21,55 +23,38 @@ export default function BrowsePublicHabits() {
   useEffect(() => {
     setLoading(true);
 
+    const categoryQuery =
+      selectedCategory === "All Category"
+        ? ""
+        : `&category=${selectedCategory}`;
+
     fetch(
-      `https://habit-tracker-sarver-1.vercel.app/habits?page=${page}&limit=9`
+      `https://habit-tracker-sarver-1.vercel.app/habits?search=${searchTerm}&sort=${sortOrder}${categoryQuery}&page=${page}&limit=${limit}`
     )
       .then((res) => res.json())
       .then((data) => {
         setHabits(data.habits);
-        setTotal(data.total || 0);
+        setTotal(data.total);
         setTotalPages(data.totalPages);
-
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error:", err);
+        console.error(err);
         setLoading(false);
       });
-  }, [page]);
+  }, [searchTerm, selectedCategory, sortOrder, page]);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen ">
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm, selectedCategory, sortOrder]);
 
-  // Filter + Sort Logic
-  const filteredHabits = habits
-    .filter((habit) => {
-      // Category match OR All Category allowed
-      const matchesCategory =
-        selectedCategory === "All Category" ||
-        habit.category === selectedCategory;
-
-      // Search match (title or description)
-      const matchesSearch =
-        habit.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        habit.description?.toLowerCase().includes(searchTerm.toLowerCase());
-
-      return matchesCategory && matchesSearch;
-    })
-    .sort((a, b) => {
-      // Sort newest first (latest date first)
-      if (sortOrder === "newest") {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      }
-
-      // Sort oldest first
-      return new Date(a.createdAt) - new Date(b.createdAt);
-    });
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen ">
+  //       <LoadingSpinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <motion.section
@@ -141,7 +126,7 @@ export default function BrowsePublicHabits() {
             {/* Top Bar: Showing Count + Sort Dropdown + Mobile Drawer */}
             <div className="flex items-center justify-between mb-6">
               <p className="text-sm">
-                Showing {filteredHabits?.length || 0} of {total || 0} habits
+                Showing {habits.length} of {total} habits
               </p>
 
               <div className="flex items-center">
@@ -177,16 +162,26 @@ export default function BrowsePublicHabits() {
               "
             >
               {/* If No Result */}
-              {filteredHabits.length === 0 ? (
+              {habits.length === 0 ? (
                 <p className="text-gray-500 text-center mt-10 col-span-4">
                   No habits found matching your criteria.
                 </p>
               ) : (
                 <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {/* Map through habits */}
-                  {filteredHabits.map((habit, index) => (
-                    <Card key={index} habit={habit} index={index} />
-                  ))}
+                  <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {loading
+                      ? Array.from({ length: limit }).map((_, i) => (
+                          <CardSkeleton key={i} />
+                        ))
+                      : habits.map((habit, index) => (
+                          <Card
+                            key={habit._id || index}
+                            habit={habit}
+                            index={index}
+                          />
+                        ))}
+                  </div>
                 </div>
               )}
 
