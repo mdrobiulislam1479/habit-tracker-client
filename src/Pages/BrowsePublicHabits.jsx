@@ -5,10 +5,12 @@ import Card from "../Components/cards/Card";
 import FilterDrawer from "../Components/buttons/FilterDrawer";
 import Pagination from "../Components/buttons/Pagination";
 import CardSkeleton from "../Components/cards/CardSkeleton";
+import SidebarSkeleton from "../Components/skeleton/SidebarSkeleton";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Category");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -37,6 +39,7 @@ export default function BrowsePublicHabits() {
         setTotal(data.total);
         setTotalPages(data.totalPages);
         setLoading(false);
+        setInitialLoading(false);
       })
       .catch((err) => {
         console.error(err);
@@ -47,14 +50,6 @@ export default function BrowsePublicHabits() {
   useEffect(() => {
     setPage(1);
   }, [searchTerm, selectedCategory, sortOrder]);
-
-  // if (loading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen ">
-  //       <LoadingSpinner />
-  //     </div>
-  //   );
-  // }
 
   return (
     <motion.section
@@ -84,49 +79,59 @@ export default function BrowsePublicHabits() {
         {/* Layout Area */}
         <div className="flex gap-8 py-10 px-4 lg:px-6 max-w-7xl mx-auto">
           {/* Sidebar (Desktop Only) */}
-          <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border-2 border-accent/5 h-fit">
-            {/* Search Input */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Search</h4>
-              <input
-                type="text"
-                placeholder="Search habits..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
-              />
-            </div>
+          {initialLoading ? (
+            <SidebarSkeleton />
+          ) : (
+            <aside className="w-64 hidden lg:block px-5 py-10 bg-primary rounded-xl border-2 border-accent/5 h-fit">
+              {/* Search Input */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Search</h4>
+                <input
+                  type="text"
+                  placeholder="Search habits..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none transition"
+                />
+              </div>
 
-            {/* Category Filter */}
-            <div>
-              <h4 className="font-semibold mb-2">Category</h4>
-              <ul className="space-y-2">
-                {categories.map((cat) => (
-                  <li key={cat} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedCategory === cat}
-                      value={cat}
-                      onChange={() =>
-                        setSelectedCategory(
-                          selectedCategory === cat ? "All Category" : cat
-                        )
-                      }
-                      className="cursor-pointer"
-                    />
-                    <label>{cat}</label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
+              {/* Category Filter */}
+              <div>
+                <h4 className="font-semibold mb-2">Category</h4>
+                <ul className="space-y-2">
+                  {categories.map((cat) => (
+                    <li key={cat} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedCategory === cat}
+                        value={cat}
+                        onChange={() =>
+                          setSelectedCategory(
+                            selectedCategory === cat ? "All Category" : cat
+                          )
+                        }
+                        className="cursor-pointer"
+                      />
+                      <label>{cat}</label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
+          )}
 
           {/* Main Content */}
           <main className="flex-1">
             {/* Top Bar: Showing Count + Sort Dropdown + Mobile Drawer */}
             <div className="flex items-center justify-between mb-6">
               <p className="text-sm">
-                Showing {habits.length} of {total} habits
+                {loading ? (
+                  <span className="inline-block h-4 w-32 bg-gray-200 rounded animate-pulse"></span>
+                ) : (
+                  <>
+                    Showing {habits.length} of {total} habits
+                  </>
+                )}
               </p>
 
               <div className="flex items-center">
@@ -152,45 +157,38 @@ export default function BrowsePublicHabits() {
             </div>
 
             {/* Product Grid */}
-            <div
-              className="
-                grid 
-                gap-6
-                sm:grid-cols-2
-                lg:grid-cols-3
-                xl:grid-cols-4
-              "
-            >
-              {/* If No Result */}
-              {habits.length === 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {loading ? (
+                // Loading Skeleton
+                Array.from({ length: limit }).map((_, i) => (
+                  <CardSkeleton key={i} />
+                ))
+              ) : habits.length === 0 ? (
+                // No Data
                 <p className="text-gray-500 text-center mt-10 col-span-4">
                   No habits found matching your criteria.
                 </p>
               ) : (
+                // Data Loaded
                 <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {/* Map through habits */}
-                  <div className="col-span-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {loading
-                      ? Array.from({ length: limit }).map((_, i) => (
-                          <CardSkeleton key={i} />
-                        ))
-                      : habits.map((habit, index) => (
-                          <Card
-                            key={habit._id || index}
-                            habit={habit}
-                            index={index}
-                          />
-                        ))}
-                  </div>
+                  {habits.map((habit, index) => (
+                    <Card
+                      key={habit._id || index}
+                      habit={habit}
+                      index={index}
+                    />
+                  ))}
                 </div>
               )}
 
               {/* Pagination */}
-              <Pagination
-                page={page}
-                setPage={setPage}
-                totalPages={totalPages}
-              />
+              {!loading && (
+                <Pagination
+                  page={page}
+                  setPage={setPage}
+                  totalPages={totalPages}
+                />
+              )}
             </div>
           </main>
         </div>
