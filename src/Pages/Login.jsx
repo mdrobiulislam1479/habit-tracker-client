@@ -69,6 +69,34 @@ const Login = () => {
       });
   };
 
+  // Demo user credentials
+  const demoUser = {
+    email: import.meta.env.VITE_user_email,
+    password: import.meta.env.VITE_user_password,
+  };
+
+  const handleDemoLogin = () => {
+    setLoading(true);
+    signInUser(demoUser.email, demoUser.password)
+      .then(() => {
+        toast.success("Logged in as Demo User!");
+        navigate(location.state || "/");
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        const messages = {
+          "auth/invalid-email": "Invalid email address.",
+          "auth/user-disabled": "This user account has been disabled.",
+          "auth/user-not-found": "No account found with this email.",
+          "auth/wrong-password": "Incorrect password. Please try again.",
+          "auth/network-request-failed":
+            "Network error. Check your internet connection.",
+        };
+        toast.error(messages[error.code] || error.message);
+      });
+  };
+
   return (
     <div className="min-h-screen lg:px-10 flex items-center justify-center">
       <title>Habit Tracker | Log In</title>
@@ -161,6 +189,20 @@ const Login = () => {
           >
             <FcGoogle size={24} />
             <span>Login with Google</span>
+          </button>
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="mt-4"
+        >
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md font-semibold transition cursor-pointer"
+          >
+            Login as Demo User
           </button>
         </motion.div>
 
