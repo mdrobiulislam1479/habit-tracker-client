@@ -1,25 +1,33 @@
 import { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Logo from "../../assets/logo.png";
 import { GrLogout } from "react-icons/gr";
 import { AiOutlineBars, AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "../../Context/AuthContext";
 import MenuItem from "./MenuItem";
-import { Fa42Group } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { RxDashboard } from "react-icons/rx";
 import { GiProgression } from "react-icons/gi";
 import { FiPlusCircle } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const { signOutUser } = use(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Toggle sidebar on mobile
   const handleToggle = () => setIsOpen(!isOpen);
 
   // Auto close after clicking a menu item (mobile)
   const closeSidebar = () => setIsOpen(false);
+
+  // logout handler
+  const handleLogout = async () => {
+    await signOutUser();
+    navigate("/");
+    toast.success("Logout successful!");
+  };
 
   return (
     <>
@@ -109,7 +117,7 @@ const Sidebar = () => {
             <hr className="my-2 text-accent" />
 
             <button
-              onClick={signOutUser}
+              onClick={handleLogout}
               className="flex w-full items-center px-4 py-3 mt-4 text-accent hover:bg-base-200 transition cursor-pointer"
             >
               <GrLogout className="w-5 h-5" />

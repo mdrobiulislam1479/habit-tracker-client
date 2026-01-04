@@ -25,7 +25,7 @@ const Login = () => {
       .then(() => {
         toast.success("Log In successful!");
         e.target.reset();
-        navigate(location.state?.from || "/");
+        navigate(location.state || "/");
         setLoading(false);
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ const Login = () => {
     signInWithGoogle()
       .then(() => {
         toast.success("Google sign in successful!");
-        navigate(location.state?.from || "/");
+        navigate(location.state || "/");
         setLoading(false);
       })
       .catch((error) => {

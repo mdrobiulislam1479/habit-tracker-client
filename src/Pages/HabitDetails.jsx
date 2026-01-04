@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { use, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { IoMdPricetags } from "react-icons/io";
 import { FiCheckCircle, FiTrendingUp, FiUser, FiMail } from "react-icons/fi";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
+import { AuthContext } from "../Context/AuthContext";
 
 export default function HabitDetails() {
   const { id } = useParams();
   const [habit, setHabit] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`https://habit-tracker-sarver-1.vercel.app/habits/${id}`)
@@ -22,6 +26,10 @@ export default function HabitDetails() {
   }, [id]);
 
   const handleMarkComplete = async () => {
+    if (!user) {
+      navigate("/login", { state: location.pathname });
+      return;
+    }
     try {
       const res = await fetch(
         `https://habit-tracker-sarver-1.vercel.app/habits/complete/${id}`,

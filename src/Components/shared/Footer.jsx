@@ -47,8 +47,8 @@ export default function Footer() {
           >
             <h3 className="text-lg font-medium mb-2 text-[#222831]">Contact</h3>
             <ul className="text-sm space-y-1 text-gray-700">
-              <li>Email: example@gmail.com</li>
-              <li>Phone: +8801XXXXXXXXX</li>
+              <li>Email: support@habittracker.com</li>
+              <li>Phone: +8801900000000</li>
               <li>Address: Khulna, Bangladesh</li>
             </ul>
           </motion.div>
@@ -59,15 +59,24 @@ export default function Footer() {
             viewport={{ once: true }}
             variants={sectionVariants}
           >
-            <h3 className="text-lg font-medium mb-2 text-[#222831]">Legal</h3>
+            <h3 className="text-lg font-medium mb-2 text-[#222831]">
+              Quick Links
+            </h3>
             <ul className="text-sm space-y-1 text-gray-700">
               <li>
-                <a className="hover:underline cursor-pointer">
-                  Terms & Conditions
-                </a>
+                <Link to={"/"} className="hover:underline">
+                  Home
+                </Link>
               </li>
               <li>
-                <a className="hover:underline cursor-pointer">Privacy Policy</a>
+                <Link to={"/about"} className="hover:underline">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to={"/contact"} className="hover:underline">
+                  Contact
+                </Link>
               </li>
             </ul>
           </motion.div>
