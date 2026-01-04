@@ -72,6 +72,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
+      <title>Habit Tracker | About</title>
       {/* Hero Section */}
       <section className="py-16 px-4 md:px-8 lg:px-16 bg-linear-to-br from-secondary  to-blue-500 text-white">
         <div className="max-w-4xl mx-auto text-center">

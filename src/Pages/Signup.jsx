@@ -81,7 +81,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen lg:px-10 pt-16 flex items-center justify-center">
+    <div className="min-h-screen lg:px-10 flex items-center justify-center">
       <title>Habit Tracker | Register</title>
 
       <motion.div

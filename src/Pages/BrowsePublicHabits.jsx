@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import LoadingSpinner from "../Components/shared/LoadingSpinner";
 import Card from "../Components/cards/Card";
 import FilterDrawer from "../Components/buttons/FilterDrawer";
+import Pagination from "../Components/buttons/Pagination";
 
 export default function BrowsePublicHabits() {
   const [habits, setHabits] = useState([]);
@@ -10,22 +11,32 @@ export default function BrowsePublicHabits() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Category");
   const [sortOrder, setSortOrder] = useState("newest");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
 
   // Static categories
   const categories = ["Morning", "Work", "Fitness", "Evening", "Study"];
 
   useEffect(() => {
-    fetch("https://habit-tracker-sarver-1.vercel.app/habits")
+    setLoading(true);
+
+    fetch(
+      `https://habit-tracker-sarver-1.vercel.app/habits?page=${page}&limit=9`
+    )
       .then((res) => res.json())
       .then((data) => {
-        setHabits(data);
+        setHabits(data.habits);
+        setTotal(data.total || 0);
+        setTotalPages(data.totalPages);
+
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching habits:", err);
+        console.error("Error:", err);
         setLoading(false);
       });
-  }, []);
+  }, [page]);
 
   if (loading) {
     return (
@@ -130,7 +141,7 @@ export default function BrowsePublicHabits() {
             {/* Top Bar: Showing Count + Sort Dropdown + Mobile Drawer */}
             <div className="flex items-center justify-between mb-6">
               <p className="text-sm">
-                Showing {filteredHabits.length} of {habits.length} products
+                Showing {filteredHabits?.length || 0} of {total || 0} habits
               </p>
 
               <div className="flex items-center">
@@ -178,6 +189,13 @@ export default function BrowsePublicHabits() {
                   ))}
                 </div>
               )}
+
+              {/* Pagination */}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                totalPages={totalPages}
+              />
             </div>
           </main>
         </div>

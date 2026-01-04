@@ -37,6 +37,7 @@ const Profile = () => {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8">
+       <title>Dashboard | Profile</title>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div

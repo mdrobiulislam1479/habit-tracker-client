@@ -143,7 +143,7 @@ export default function MyHabits() {
 
   return (
     <section className="py-22 px-4 sm:px-6 lg:px-8">
-      <title>Habit Tracker | My Habits</title>
+       <title>Dashboard | My Habits</title>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-accent mb-6 text-center">
           My Habits

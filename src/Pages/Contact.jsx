@@ -16,6 +16,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-base-100 text-base-content">
+      <title>Habit Tracker | Contact</title>
       {/* HERO SECTION */}
       <section className="py-16 px-4 bg-linear-to-br from-secondary  to-blue-500 text-white">
         <div className="max-w-4xl mx-auto text-center">

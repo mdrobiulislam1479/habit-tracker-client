@@ -105,7 +105,7 @@ export default function AddHabit() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <title>Habit Tracker | Add Habit</title>
+      <title>Dashboard | Add Habit</title>
       <motion.h2
         className="text-2xl font-semibold mb-6 text-green-500 text-center"
         initial={{ opacity: 0, scale: 0.9 }}
