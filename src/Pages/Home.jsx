@@ -4,6 +4,7 @@ import HowItWorks from "../Components/HomeComponents/HowItWorks ";
 import JoinCommunity from "../Components/HomeComponents/JoinCommunity";
 import NewsletterSignup from "../Components/HomeComponents/NewsletterSignup";
 import PremiumPlan from "../Components/HomeComponents/PremiumPlan";
+import UserTestimonials from "../Components/HomeComponents/UserTestimonials";
 import WhyBuildHabits from "../Components/HomeComponents/WhyBuildHabits";
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
       <HowItWorks />
       <PremiumPlan />
       <JoinCommunity />
+      <UserTestimonials/>
       <NewsletterSignup />
     </div>
   );

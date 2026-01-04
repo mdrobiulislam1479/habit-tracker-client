@@ -56,30 +56,32 @@ const PremiumPlan = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-accent mb-4">
             Premium Plan
           </h2>
-          <p className="text-accent/80 mb-12 max-w-2xl mx-auto">
+          <p className="text-accent/80 max-w-2xl mx-auto">
             Choose the perfect plan for your habit tracking journey
           </p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Pricing Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`rounded-lg shadow-lg transition transform hover:scale-105 ${
-                plan.highlighted
-                  ? "bg-linear-to-br from-secondary  to-blue-500 text-white md:scale-105 order-2 md:order-0"
-                  : "bg-primary  text-accent  order-1 md:order-0"
-              }`}
+              className={`rounded-lg shadow-lg overflow-hidden transition-all transform hover:scale-[1.03] flex flex-col
+                ${
+                  plan.highlighted
+                    ? "bg-linear-to-br from-secondary to-blue-500 text-white order-first lg:order-0"
+                    : "bg-primary text-accent"
+                }`}
             >
+              {/* Highlight Badge */}
               {plan.highlighted && (
-                <div className="bg-yellow-400 text-gray-800 text-center py-2 font-bold rounded-t-lg">
+                <div className="bg-yellow-400 text-gray-800 text-center py-2 font-bold">
                   MOST POPULAR
                 </div>
               )}
 
-              <div className="p-8">
-                {/* Plan Name */}
+              <div className="p-8 flex flex-col flex-1">
+                {/* Header */}
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                 <p
                   className={`text-sm mb-6 ${
@@ -96,7 +98,7 @@ const PremiumPlan = () => {
                   <span className="text-5xl font-bold">${plan.price}</span>
                   {plan.price !== "0" && (
                     <span
-                      className={`text-sm ${
+                      className={`text-sm ml-1 ${
                         plan.highlighted
                           ? "text-blue-100"
                           : "text-gray-600 dark:text-gray-400"
@@ -109,8 +111,8 @@ const PremiumPlan = () => {
 
                 {/* Button */}
                 <Link
-                  to={"/contact"}
-                  className={`btn w-full py-6 text-lg px-6 rounded-lg font-bold transition mb-8 border-0 ${
+                  to="/contact"
+                  className={`w-full py-4 rounded-lg font-bold text-center mb-8 transition border-0 ${
                     plan.highlighted
                       ? "bg-white text-blue-600 hover:bg-gray-100"
                       : "bg-secondary text-white hover:bg-secondary/80"
@@ -119,12 +121,12 @@ const PremiumPlan = () => {
                   {plan.buttonText}
                 </Link>
 
-                {/* Features List */}
-                <div className="space-y-4">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center gap-3">
+                {/* Features */}
+                <div className="space-y-4 flex-1">
+                  {plan.features.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3">
                       <FaCheck
-                        className={`${
+                        className={`text-lg ${
                           plan.highlighted ? "text-green-200" : "text-green-500"
                         }`}
                       />
@@ -139,8 +141,8 @@ const PremiumPlan = () => {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <p className={`text-accent/60 mb-4`}>
-            All plans include 30-day free trial. No credit card required.
+          <p className="text-accent/60">
+            All plans include a 30-day free trial. No credit card required.
           </p>
         </div>
       </div>
